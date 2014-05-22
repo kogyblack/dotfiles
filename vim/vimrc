@@ -10,16 +10,16 @@ set encoding=utf-8
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
-set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
+"set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
 set tags=.git/tags;$HOME       " consider the repo tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
 
-set modeline
-set modelines=5                " default numbers of lines to read for modeline instructions
+"set modeline
+"set modelines=5                " default numbers of lines to read for modeline instructions
 
-set autowrite                  " Writes on make/shell commands
+"set autowrite                  " Writes on make/shell commands
 set autoread
 
 set nobackup
@@ -37,7 +37,7 @@ set incsearch                  " show matches while typing
 let mapleader = ','
 let maplocalleader = '	'      " Tab as a local leader
 
-set scrolloff=7
+set scrolloff=5
 
 " "}}}
 
@@ -46,20 +46,22 @@ set fo+=o                      " Automatically insert the current comment leader
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
-set nowrap
+"set nowrap
+set whichwrap+=<,>,h,l
 set textwidth=0                " Don't wrap lines by default
 
 set tabstop=2                  " tab size eql 2 spaces
 set softtabstop=2
 set shiftwidth=2               " default shift width for indents
 set expandtab                  " replace tabs with ${tabstop} spaces
-set smarttab                   "
+"set smarttab                   "
 
 set backspace=indent
 set backspace+=eol
 set backspace+=start
 
-set autoindent
+"set autoindent
+"set nocindent
 set cindent
 set indentkeys-=0#            " do not break indent on #
 set cinkeys-=0#
@@ -71,24 +73,22 @@ set cinwords+=for,switch,case
 " Visual "{{{
 syntax on                      " enable syntax
 
-"set synmaxcol=250              " limit syntax highlighting to 128 columns
-
-set    mouse=a                   "enable mouse in GUI mode
-set    mousehide                 " Hide mouse after chars typed
+set mouse=a                   "enable mouse in GUI mode
+set mousehide                 " Hide mouse after chars typed
 
 "set nonumber                  " line numbers Off
-set    number
+set number
 
-set    cursorline                " Current line adornment
+set cursorline                " Current line adornment
 
-set    lazyredraw                " Don't redraw while executing macros
+set lazyredraw                " Don't redraw while executing macros
 
-set    magic
+set magic
 
-set    showmatch                 " Show matching brackets.
-set    matchtime=2               " Bracket blinking.
+set showmatch                 " Show matching brackets.
+set matchtime=2               " Bracket blinking.
 
-set    wildmode=longest,list     " At command line, complete longest common string, then list alternatives.
+set wildmode=longest,list     " At command line, complete longest common string, then list alternatives.
 
 set completeopt+=preview
 
@@ -100,10 +100,10 @@ set laststatus=2              " always show status line.
 set shortmess=atI             " shortens messages
 set showcmd                   " display an incomplete command in statusline
 
-set statusline=%<%f\          " custom statusline
-set stl+=[%{&ff}]             " show fileformat
-set stl+=%y%m%r%=
-set stl+=%-14.(%l,%c%V%)\ %P
+"set statusline=%<%f\          " custom statusline
+"set stl+=[%{&ff}]             " show fileformat
+"set stl+=%y%m%r%=
+"set stl+=%-14.(%l,%c%V%)\ %P
 
 
 set foldenable                " Turn on folding
@@ -126,31 +126,37 @@ set splitright
 set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
 map <silent> <F12> :set invlist<CR>
 
-if has('gui_running')
-  set guioptions=cMg " console dialogs, do not show menu and toolbar
+"if has('gui_running')
+"  set guioptions=cMg " console dialogs, do not show menu and toolbar
+"
+"  " Fonts
+"  " :set guifont=* " to launch a GUI dialog
+"  if has('mac')
+"  set guifont=Andale\ Mono:h13
+"  else
+"  set guifont=Terminus:h16
+"  end
+"
+"  if has('mac')
+"  set noantialias
+"  " set fullscreen
+"  set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+"  endif
+"endif
 
-  " Fonts
-  " :set guifont=* " to launch a GUI dialog
-  if has('mac')
-  set guifont=Andale\ Mono:h13
-  else
-  set guifont=Terminus:h16
-  end
-
-  if has('mac')
-  set noantialias
-  " set fullscreen
-  set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-  endif
-endif
 " "}}}
 
 " Key mappings " {{{
-" Duplication
-nnoremap <leader>c mz"dyy"dp`z
-vnoremap <leader>c "dymz"dP`z
 
-nnoremap <leader>rs :source ~/.vimrc<CR>
+" Simpler ExMode
+nnoremap ; :
+
+" Duplication
+"nnoremap <leader>c mz"dyy"dp`z
+"vnoremap <leader>c "dymz"dP`z
+
+"nnoremap <leader>rs :source ~/.vimrc<CR>
+nnoremap <leader>rs :source $MYVIMRC<CR>
 "nnoremap <leader>rt :tabnew ~/.vim/vimrc<CR>
 "nnoremap <leader>re :e ~/.vim/vimrc<CR>
 "nnoremap <leader>rd :e ~/.vim/ <CR>
@@ -166,7 +172,8 @@ nnoremap <localleader>- :bd<CR>
 nnoremap <localleader>-- :bd!<CR>
 
 " Split line(opposite to S-J joining line)
-nnoremap <S-k> gEa<CR><ESC>ew
+"nnoremap <S-k> gEa<CR><ESC>ew
+nnoremap <S-k> i<CR><ESC>
 
 "map <silent> <C-W>v :vnew<CR>
 "map <silent> <C-W>s :snew<CR>
@@ -200,33 +207,33 @@ nmap <C-k> :wincmd k<CR>
 nmap <C-l> :wincmd l<CR>
 
 " Move in Insert mode
-imap <A-h> <Left>
-imap <A-j> <Down>
-imap <A-k> <Up>
-imap <A-l> <Right>
+"imap <M-h> <Left>
+"imap <M-j> <Down>
+"imap <M-k> <Up>
+"imap <M-l> <Right>
 
 " Splitting window
 nnoremap <leader>v :vnew<CR>
 nnoremap <leader>s <C-w>s
 
 " Close window
-function! CloseWindowOrKillBuffer()
-  let number_of_windows_to_this_buffer =
-        \ len(filter(range(1, winnr('$')), "winbufnr(v:val) == bufnr('%')"))
-
-  " never bdelete a nerd tree
-  if matchstr(expand("%"), 'NERD') == 'NERD'
-    wincmd c
-    return
-  endif
-
-  if number_of_windows_to_this_buffer > 1
-    wincmd c
-  else
-    bdelete
-  endif
-endfunction
-nmap <silent> <Leader>c :call CloseWindowOrKillBuffer()<CR>
+"function! CloseWindowOrKillBuffer()
+"  let number_of_windows_to_this_buffer =
+"        \ len(filter(range(1, winnr('$')), "winbufnr(v:val) == bufnr('%')"))
+"
+"  " never bdelete a nerd tree
+"  if matchstr(expand("%"), 'NERD') == 'NERD'
+"    wincmd c
+"    return
+"  endif
+"
+"  if number_of_windows_to_this_buffer > 1
+"    wincmd c
+"  else
+"    bdelete
+"  endif
+"endfunction
+"nmap <silent> <Leader>c :call CloseWindowOrKillBuffer()<CR>
 
 " Remap search to center match
 nnoremap <silent> n nzz
@@ -238,20 +245,20 @@ nnoremap <silent> <C-i> <C-i>zz
 
 " when pasting copy pasted text back to
 " buffer instead replacing with owerride
-xnoremap p pgvy
+"xnoremap p pgvy
 
 " Control+S and Control+Q are flow-control characters: disable them in your terminal settings.
 " $ stty -ixon -ixoff
-noremap <C-S> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <C-O>:update<CR>
+"noremap <C-S> :update<CR>
+"vnoremap <C-S> <C-C>:update<CR>
+"inoremap <C-S> <C-O>:update<CR>
 "
 " generate HTML version current buffer using current color scheme
 "map <leader>2h :runtime! syntax/2html.vim<CR>
 
 " Erase highlights
 "nnoremap <S-Space> :noh<CR>
-nmap <silent> <leader>nh :nohlsearch<CR>
+nmap <silent> <leader>n :nohlsearch<CR>
 
 " " }}}
 
@@ -275,21 +282,71 @@ autocmd! BufWritePost .vimrc,_vimrc,vimrc
 
 " Scripts and Plugins " {{{
 filetype off
-"runtime macros/matchit.vim
-set rtp+=~/.vim/bundle/Vundle.vim
+runtime macros/matchit.vim
+set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Plugin 'gmarik/vundle' " let Vundle manage Vundle
 
+" Autocomplete "{{{
 " YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_collect_identifiers_from_tag_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_register_as_syntastic_checker = 0
+
+" Omnicomplete
+"Plugin 'vim-scripts/OmniCppComplete'
+"let OmniCpp_NamespaceSearch = 1
+"let OmniCpp_GlobalScopeSearch = 1
+"let OmniCpp_MayCompleteDot = 1
+"let OmniCpp_MayCompleteArrow = 1
+"let OmniCpp_MayCompleteScope = 1
+
+" Neocomplete
+"Plugin 'Shougo/neocomplete.vim'
+"let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_smart_case = 1
+"let g:neocomplete#sources#syntax#min_keyword_length = 1
+"let g:neocomplete#enable_ignore_case = 1
+"let g:neocomplete#enable_camel_case = 1
+"inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" "}}}
 
 " Cpp Enhanced Highlight
 Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " Syntastic
 Plugin 'scrooloose/syntastic'
+let g:syntastic_check_on_open = 1
+"let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.8/', '/usr/include/wx-3.0/', '/usr/include/wx-3.0/wx/']
+let g:syntastic_cpp_include_dirs = ['/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0/', '/usr/include/wx-3.0/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++ `wx-config --cppflags` `wx-config --libs`'
+"set error or warning signs
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+"whether to show balloons
+let g:syntastic_enable_balloons = 1
+let g:syntastic_auto_loc_list = 1
+"let g:syntastic_mode_map = { "mode": "passive" }
+hi SpellBad ctermbg=black
+hi SpellCap ctermbg=black
+
+" Indent line
+Plugin 'Yggdroot/indentLine'
+let g:indentLine_color_term = 0
+
+" Indent guides
+"Plugin 'nathanaelkane/vim-indent-guides'
+"let g:indent_guides_auto_colors = 0
+"let g:indent_guides_enable_on_vim_startup = 1
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
 
 " Colorscheme
 "Plugin 'gmarik/ingretu'
@@ -364,11 +421,18 @@ Plugin 'bogado/file-line'
 Plugin 'vim-scripts/lastpos.vim'
 Plugin 'junegunn/vim-easy-align'
 vmap <Enter> <Plug>(EasyAlign)
-nmap <Leader>a <Plug>(EasyAlign)
+"nmap <Leader>a <Plug>(EasyAlign)
+vmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+"nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
 
 Plugin 'Lokaltog/vim-easymotion'
 let g:EasyMotion_leader_key='<LocalLeader>'
+map <LocalLeader>h <Plug>(easymotion-linebackward)
+map <LocalLeader>j <Plug>(easymotion-j)
+map <LocalLeader>k <Plug>(easymotion-k)
+map <LocalLeader>l <Plug>(easymotion-lineforward)
+
 
 "Plugin 'ZoomWin'
 "noremap <leader>o :ZoomWin<CR>
@@ -417,6 +481,7 @@ let g:EasyMotion_leader_key='<LocalLeader>'
 "nnoremap <leader>gn :vnew \| :FufFile ~/src/notes/<CR>
 
 " " }}}
+
 
 "Plugin 'kien/ctrlp.vim'
 "let g:ctrlp_map = '<leader>t'
