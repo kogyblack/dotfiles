@@ -13,15 +13,19 @@ compilation_database_folder = ''
 # compilation database set.
 flags = [
     '-Wall',
+    '-Wextra',
+    '-Werror',
+    '-Wno-long-long',
+    '-Wno-variadic-macros',
+    '-fexceptions',
     '-std=c++11',
     '-stdlib=libc++',
-    '-x',
-    'c++',
-    '-I',
-    '.',
-    '-isystem',
-    #'/usr/lib/c++/v1'
-    '/usr/include/c++/4.8'
+    '-x', 'c++',
+    '-I', '.',
+    '-I', '/usr/include/',
+    '-I', '/usr/local/include/',
+    '-isystem', '/usr/include/c++/4.8',
+    '-isystem', '/usr/include/boost/' #boost
 ]
  
 if compilation_database_folder:
