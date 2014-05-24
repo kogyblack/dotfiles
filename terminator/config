@@ -1,0 +1,20 @@
+[global_config]
+[keybindings]
+  next_tab = <Primary>Tab
+  prev_tab = <Primary><Shift>Tab
+[profiles]
+  [[default]]
+    background_darkness = 0.91
+    background_image = None
+    background_type = transparent
+    show_titlebar = False
+    foreground_color = "#ffffff"
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
