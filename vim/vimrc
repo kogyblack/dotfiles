@@ -10,7 +10,7 @@ set encoding=utf-8
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
-"set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
+set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
 set tags=.git/tags;$HOME       " consider the repo tags first, then
                                " walk directory tree upto $HOME looking for tags
@@ -34,7 +34,7 @@ set ignorecase                 " be case insensitive when searching
 set smartcase                  " be case sensitive when input has a capital letter
 set incsearch                  " show matches while typing
 
-let mapleader = ','
+let mapleader = ' '
 let maplocalleader = '	'      " Tab as a local leader
 
 set scrolloff=5
@@ -42,13 +42,18 @@ set scrolloff=5
 " "}}}
 
 " Formatting "{{{
-set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
-set fo-=r                      " Do not automatically insert a comment leader after an enter
-set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
+"set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+"set fo-=r                      " Do not automatically insert a comment leader after an enter
+"set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
+
+set formatoptions=tcroqnj
 
 "set nowrap
 set whichwrap+=<,>,h,l
-set textwidth=0                " Don't wrap lines by default
+
+set textwidth=80                " 
+set colorcolumn=+1
+hi ColorColumn ctermbg=0
 
 set tabstop=2                  " tab size eql 2 spaces
 set softtabstop=2
@@ -56,16 +61,19 @@ set shiftwidth=2               " default shift width for indents
 set expandtab                  " replace tabs with ${tabstop} spaces
 "set smarttab                   "
 
+set noshowmode                 " don't show the mode ("-- INSERT --") at the bottom
+
 set backspace=indent
 set backspace+=eol
 set backspace+=start
 
-"set autoindent
-"set nocindent
+set autoindent
 set cindent
-set indentkeys-=0#            " do not break indent on #
-set cinkeys-=0#
-set cinoptions=:s,ps,ts,cs
+"set indentkeys-=0#            " do not break indent on #
+"set cinkeys-=0#
+set cinkeys+=0=break
+set cinoptions=:s,cs
+set cinoptions+=b1,g0,N-s,t0,(0,W4
 set cinwords=if,else,while,do
 set cinwords+=for,switch,case
 " "}}}
@@ -79,6 +87,8 @@ set mousehide                 " Hide mouse after chars typed
 "set nonumber                  " line numbers Off
 set number
 
+set undofile                  " stores undo state even when files are closed (in undodir)
+
 set cursorline                " Current line adornment
 
 set lazyredraw                " Don't redraw while executing macros
@@ -89,6 +99,7 @@ set showmatch                 " Show matching brackets.
 set matchtime=2               " Bracket blinking.
 
 set wildmode=longest,list     " At command line, complete longest common string, then list alternatives.
+set wildmenu                  " Completition with menu
 
 set completeopt+=preview
 
@@ -119,41 +130,24 @@ set virtualedit=block
 set splitbelow
 set splitright
 
-"set list                      " display unprintable characters f12 - switches
-"set listchars=tab:\ ·,eol:¬
-"set listchars+=trail:·
-"set listchars+=extends:»,precedes:«
 set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
 map <silent> <F12> :set invlist<CR>
-
-"if has('gui_running')
-"  set guioptions=cMg " console dialogs, do not show menu and toolbar
-"
-"  " Fonts
-"  " :set guifont=* " to launch a GUI dialog
-"  if has('mac')
-"  set guifont=Andale\ Mono:h13
-"  else
-"  set guifont=Terminus:h16
-"  end
-"
-"  if has('mac')
-"  set noantialias
-"  " set fullscreen
-"  set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-"  endif
-"endif
 
 " "}}}
 
 " Key mappings " {{{
 
-" Simpler ExMode
+" Swap ; and :, since : is used way more than ;
 nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
-" Duplication
-"nnoremap <leader>c mz"dyy"dp`z
-"vnoremap <leader>c "dymz"dP`z
+" Swap ` and '
+nnoremap ' `
+nnoremap ` '
+vnoremap ' `
+vnoremap ` '
 
 "nnoremap <leader>rs :source ~/.vimrc<CR>
 nnoremap <leader>rs :source $MYVIMRC<CR>
@@ -168,8 +162,8 @@ nnoremap <localleader>h :tabprev<CR>
 nnoremap <localleader>l :tabnext<CR>
 
 " Buffers
-nnoremap <localleader>- :bd<CR>
-nnoremap <localleader>-- :bd!<CR>
+"nnoremap <localleader>- :bd<CR>
+"nnoremap <localleader>-- :bd!<CR>
 
 " Split line(opposite to S-J joining line)
 "nnoremap <S-k> gEa<CR><ESC>ew
@@ -178,62 +172,30 @@ nnoremap <S-k> i<CR><ESC>
 "map <silent> <C-W>v :vnew<CR>
 "map <silent> <C-W>s :snew<CR>
 
-" copy filename
-"map <silent> <leader>. :let @+=expand('%:p').':'.line('.')<CR>
-"map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
-" copy path
-
 " Create line below
 map <S-CR> A<CR><ESC>
 
 " Explorer
-map <leader>E :Explore<CR>
-map <leader>EE :Vexplore!<CR><C-W>=
-
-" Make Control-direction switch between windows (like C-W h, etc)
-"nmap <silent> <C-k> <C-W><C-k>
-"nmap <silent> <C-j> <C-W><C-j>
-"nmap <silent> <C-h> <C-W><C-h>
-"nmap <silent> <C-l> <C-W><C-l>
+nnoremap <leader>E :Explore<CR>
+nnoremap <leader>EE :Vexplore!<CR><C-W>=
 
 " <Leader>{P,p} to paste copied outside vim
 nnoremap <silent> <Leader>P "+P
 nnoremap <silent> <Leader>p "+p
 
-" Make Control-direction switch between windows (like C-W h, etc)
-nmap <C-h> :wincmd h<CR>
-nmap <C-j> :wincmd j<CR>
-nmap <C-k> :wincmd k<CR>
-nmap <C-l> :wincmd l<CR>
+" <Leader>{y} to copy outside vim
+nnoremap <silent> <Leader>y "+y
 
-" Move in Insert mode
-"imap <M-h> <Left>
-"imap <M-j> <Down>
-"imap <M-k> <Up>
-"imap <M-l> <Right>
+" Make Control-direction switch between windows (like C-W h, etc)
+nnoremap <leader>h <c-w>h
+nnoremap <leader>j <c-w>j
+nnoremap <leader>k <c-w>k
+nnoremap <leader>l <c-w>l
 
 " Splitting window
-nnoremap <leader>v :vnew<CR>
-nnoremap <leader>s <C-w>s
-
-" Close window
-"function! CloseWindowOrKillBuffer()
-"  let number_of_windows_to_this_buffer =
-"        \ len(filter(range(1, winnr('$')), "winbufnr(v:val) == bufnr('%')"))
-"
-"  " never bdelete a nerd tree
-"  if matchstr(expand("%"), 'NERD') == 'NERD'
-"    wincmd c
-"    return
-"  endif
-"
-"  if number_of_windows_to_this_buffer > 1
-"    wincmd c
-"  else
-"    bdelete
-"  endif
-"endfunction
-"nmap <silent> <Leader>c :call CloseWindowOrKillBuffer()<CR>
+"nnoremap <leader>v :vnew<CR>
+nnoremap <leader>v <C-W>v<CR>
+"nnoremap <leader>s <C-w>s
 
 " Remap search to center match
 nnoremap <silent> n nzz
@@ -242,23 +204,55 @@ nnoremap <silent> g* g*zz
 nnoremap <silent> g# g#zz
 nnoremap <silent> <C-o> <C-o>zz
 nnoremap <silent> <C-i> <C-i>zz
-
-" when pasting copy pasted text back to
-" buffer instead replacing with owerride
-"xnoremap p pgvy
-
-" Control+S and Control+Q are flow-control characters: disable them in your terminal settings.
-" $ stty -ixon -ixoff
-"noremap <C-S> :update<CR>
-"vnoremap <C-S> <C-C>:update<CR>
-"inoremap <C-S> <C-O>:update<CR>
-"
-" generate HTML version current buffer using current color scheme
-"map <leader>2h :runtime! syntax/2html.vim<CR>
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
 
 " Erase highlights
 "nnoremap <S-Space> :noh<CR>
-nmap <silent> <leader>n :nohlsearch<CR>
+nnoremap <silent> <leader>n :nohlsearch<CR>
+
+" Now we don't have to move our fingers so far when we want to scroll through
+" the command history; also, don't forget the q: command (see :h q: for more
+" info)
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
+
+" For fast scrolling
+noremap <c-j> 15gj
+noremap <c-k> 15gk
+
+" Switch to the directory of the open buffer
+noremap <leader>cd :cd %:p:h<cr>
+
+" Toggle and untoggle spell checking
+noremap <leader>ss :setlocal spell! spelllang=en_us<cr>
+
+" spelling shortcuts using <leader>
+" ]s next misspelled word
+" [s previous misspelled word
+" zg add to dict
+" z= get suggestions
+noremap <leader>sn ]s
+noremap <leader>sp [s
+noremap <leader>sa zg
+noremap <leader>su z=
+
+" Using '<' and '>' in visual mode to shift code by a tab-width left/right by
+" default exits visual mode. With this mapping we remain in visual mode after
+" such an operation.
+vnoremap < <gv
+vnoremap > >gv
+
+" Move to the beginning and end of the line
+nnoremap L $
+nnoremap H ^
+
+" Get out insert and visual mode quickl
+inoremap ,. <ESC>
+vnoremap ,. <ESC>
+" LEARNING
+inoremap <ESC> <nop>
+vnoremap <ESC> <nop>
 
 " " }}}
 
@@ -288,6 +282,11 @@ call vundle#rc()
 
 Plugin 'gmarik/vundle' " let Vundle manage Vundle
 
+Plugin 'FSwitch'
+nnoremap <leader>sh :FSHere<CR>
+nnoremap <leader>sl :FSSplitRight<CR>
+nnoremap <leader>sh :FSSplitLeft<CR>
+
 " Autocomplete "{{{
 " YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
@@ -297,22 +296,6 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_register_as_syntastic_checker = 0
 
-" Omnicomplete
-"Plugin 'vim-scripts/OmniCppComplete'
-"let OmniCpp_NamespaceSearch = 1
-"let OmniCpp_GlobalScopeSearch = 1
-"let OmniCpp_MayCompleteDot = 1
-"let OmniCpp_MayCompleteArrow = 1
-"let OmniCpp_MayCompleteScope = 1
-
-" Neocomplete
-"Plugin 'Shougo/neocomplete.vim'
-"let g:neocomplete#enable_at_startup = 1
-"let g:neocomplete#enable_smart_case = 1
-"let g:neocomplete#sources#syntax#min_keyword_length = 1
-"let g:neocomplete#enable_ignore_case = 1
-"let g:neocomplete#enable_camel_case = 1
-"inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " "}}}
 
 " Cpp Enhanced Highlight
@@ -345,26 +328,15 @@ let g:indentLine_color_term = 0
 "Plugin 'nathanaelkane/vim-indent-guides'
 "let g:indent_guides_auto_colors = 0
 "let g:indent_guides_enable_on_vim_startup = 1
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
-
-" Colorscheme
-"Plugin 'gmarik/ingretu'
-
-"if has("gui_running")
-"  colorscheme ingretu
-"endif
+"let g:indent_guides_color_change_percent = 7
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8
 
 " Programming
 " Plugin 'Blackrush/vim-gocode'
 "Plugin 'fatih/vim-go'
 "Plugin 'derekwyatt/vim-scala'
 "Plugin 'tpope/vim-rails'
-
-" Snippets
-"Plugin 'gmarik/snipmate.vim'
-"Plugin 'gmarik/snipmate.snippets'
-"nnoremap <leader>so :Explore ~/.vim/bundle/snipmate.snippets/snippets/<CR>
 
 
 " Dash.app
@@ -379,7 +351,6 @@ Plugin 'gmarik/vim-markdown'
 " Git integration
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
-"
 "nnoremap <leader>W :Gwrite<CR>
 "nnoremap <leader>C :Gcommit -v<CR>
 "nnoremap <leader>S :Gstatus \| 7<CR>
@@ -390,30 +361,11 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 "Plugin 'tpope/vim-unimpaired'
-
-" bubble current line
-"nmap <M-j> ]e
-"nmap <M-k> [e
-" bubble visual selection lines
-"vmap <M-j> ]egv
-"vmap <M-k> [egv
-
-" Utility
-"Plugin 'AndrewRadev/splitjoin.vim'
-"nmap sj :SplitjoinJoin<cr>
-"nmap sk :SplitjoinSplit<cr>
-
-"Plugin 'gmarik/github-search.vim'
-
-"Plugin 'gmarik/ide-popup.vim'
-"Plugin 'gmarik/sudo-gui.vim'
-
+"
 Plugin 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
-
-"Plugin 'mkitt/browser-refresh.vim'
-"com! ONRRB :au! BufWritePost <buffer> :RRB
-"com! NORRB :au! BufWritePost <buffer>
+let g:gundo_close_on_revert=1
+"let g:gundo_width=80
 
 
 " Plugin 'SuperTab'
@@ -421,39 +373,16 @@ Plugin 'bogado/file-line'
 Plugin 'vim-scripts/lastpos.vim'
 Plugin 'junegunn/vim-easy-align'
 vmap <Enter> <Plug>(EasyAlign)
-"nmap <Leader>a <Plug>(EasyAlign)
 vmap <Leader><Enter>   <Plug>(LiveEasyAlign)
-"nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
 
 
 Plugin 'Lokaltog/vim-easymotion'
 let g:EasyMotion_leader_key='<LocalLeader>'
-map <LocalLeader>h <Plug>(easymotion-linebackward)
-map <LocalLeader>j <Plug>(easymotion-j)
-map <LocalLeader>k <Plug>(easymotion-k)
-map <LocalLeader>l <Plug>(easymotion-lineforward)
+nmap <LocalLeader>h <Plug>(easymotion-linebackward)
+nmap <LocalLeader>j <Plug>(easymotion-j)
+nmap <LocalLeader>k <Plug>(easymotion-k)
+nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 
-
-"Plugin 'ZoomWin'
-"noremap <leader>o :ZoomWin<CR>
-"vnoremap <leader>o <C-C>:ZoomWin<CR>
-"inoremap <leader>o <C-O>:ZoomWin<CR>
-
-"Plugin 'tomtom/tlib_vim'
-"Plugin 'tomtom/tcomment_vim'
-"nnoremap // :TComment<CR>
-"vnoremap // :TComment<CR>
-
-"Plugin 'gmarik/hlmatch.vim'
-"nnoremap # :<C-u>HlmCword<CR>
-"nnoremap <leader># :<C-u>HlmGrepCword<CR>
-"vnoremap # :<C-u>HlmVSel<CR>
-"vnoremap <leader># :<C-u>HlmGrepVSel<CR>
-
-"nnoremap ## :<C-u>HlmPartCword<CR>
-"nnoremap <leader>## :<C-u>HlmPartGrepCword<CR>
-"vnoremap ## :<C-u>HlmPartVSel<CR>
-"vnoremap <leader>## :<C-u>HlmPartGrepVSel<CR>
 
 " FuzzyFinder
 "Plugin 'L9'
@@ -499,24 +428,18 @@ map <LocalLeader>l <Plug>(easymotion-lineforward)
 "nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
 "nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
 
-
-" Plugin 'int3/vim-extradite'
-" Plugin 'Lokaltog/vim-powerline'
 Plugin 'bling/vim-airline'
 set t_Co=256 " set 256 colors on vim
-let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
-let g:airline_section_b = '' " airline#section#create_left(['mode', 'paste', 'iminsert'])
-let g:airline_section_c = '' " airline#section#create(['hunks'])
-let g:airline_section_gutter = airline#section#create(['%=%y%m%r[%{&ff}]'])
-let g:airline_section_x = '' " airline#section#create_right(['filetype'])
-" let g:airline_section_y = '%y%m%r%=[%{&ff}]' "airline#section#create_right(['ffenc'])
-let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
-let g:airline_section_warning = '' "airline#section#create(['whitespace'])
+let g:airline_powerline_fonts = 1
 
-"Plugin 'gregsexton/gitv'
-"Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
-"let g:sparkupExecuteMapping = '<c-e>'
-"let g:sparkupNextMapping = '<c-ee>'
+"let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
+"let g:airline_section_b = '' " airline#section#create_left(['mode', 'paste', 'iminsert'])
+"let g:airline_section_c = '' " airline#section#create(['hunks'])
+"let g:airline_section_gutter = airline#section#create(['%=%y%m%r[%{&ff}]'])
+"let g:airline_section_x = '' " airline#section#create_right(['filetype'])
+"" let g:airline_section_y = '%y%m%r%=[%{&ff}]' "airline#section#create_right(['ffenc'])
+"let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
+"let g:airline_section_warning = '' "airline#section#create(['whitespace'])
 
 filetype plugin indent on      " Automatically detect file types.
 

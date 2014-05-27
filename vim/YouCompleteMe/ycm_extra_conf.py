@@ -25,7 +25,11 @@ flags = [
     '-I', '/usr/include/',
     '-I', '/usr/local/include/',
     '-isystem', '/usr/include/c++/4.8',
-    '-isystem', '/usr/include/boost/' #boost
+    #boost
+    '-isystem', '/usr/include/boost/'
+    #wxWidgets
+    #'-isystem', '/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0/',
+    #'-isystem', '/usr/include/wx-3.0/'
 ]
  
 if compilation_database_folder:
