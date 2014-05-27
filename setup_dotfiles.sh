@@ -34,5 +34,5 @@ fi
 if [[ ! -a ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py ]]
 then
   mkdir -p ~/.vim/bundle/YouCompleteMe/cpp/ycm
-  ls -s $script_dir/vim/YouCompleteMe/ycm_extra_conf ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py
+  ln -s $script_dir/vim/YouCompleteMe/ycm_extra_conf.py ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py
 fi
