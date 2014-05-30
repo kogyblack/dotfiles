@@ -1,5 +1,51 @@
-" original file: https://github.com/gmarik/vimfiles/blob/master/vimrc
-" original file: https://github.com/Firef0x/vimfiles/blob/master/vimrc
+" reference file: https://github.com/gmarik/vimfiles/blob/master/vimrc
+" reference file: https://github.com/Firef0x/vimfiles/blob/master/vimrc
+" reference file: https://github.com/Valloric/dotfiles/blob/master/vim/vimrc.vim
+
+" Scripts and Plugins " {{{
+filetype off
+runtime macros/matchit.vim
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+
+Plugin 'gmarik/vundle' " let Vundle manage Vundle
+Plugin 'FSwitch'
+"Plugin 'Raimondi/delimitMate'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'scrooloose/syntastic'
+"Plugin 'Yggdroot/indentLine'
+Plugin 'timcharper/textile.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'gmarik/vim-markdown'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'sjl/gundo.vim'
+Plugin 'bogado/file-line'
+Plugin 'vim-scripts/lastpos.vim'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'bling/vim-airline'
+
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'wincent/Command-T'
+
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+
+" Colorscheme
+Plugin 'tomasr/molokai'
+Plugin 'kogyblack/vim-kogy-colorscheme'
+"Plugin 'matthewtodd/vim-twilight'
+"Plugin 'altercation/vim-colors-solarized.git'
+"Plugin 'jnurmine/Zenburn'
+"Plugin 'wesgibbs/vim-irblack'
+
+filetype plugin indent on      " Automatically detect file types.
+
+" " }}}
+
 
 " General "{{{
 set nocompatible               " be iMproved
@@ -8,60 +54,69 @@ scriptencoding utf-8           " utf-8 all the way
 set encoding=utf-8
 
 set history=256                " Number of things to remember in history.
-set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
+set timeoutlen=250             " Time to wait after ESC (default causes an
+                               " annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
-set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
+set pastetoggle=<F10>          " toggle between paste and normal: for 'safer'
+                               " pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
 set tags=.git/tags;$HOME       " consider the repo tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
 
 "set modeline
-"set modelines=5                " default numbers of lines to read for modeline instructions
+"set modelines=5                " default numbers of lines to read for modeline
+                                " instructions
 
-"set autowrite                  " Writes on make/shell commands
+set autowrite                  " Writes on make/shell commands
 set autoread
 
 set nobackup
 set nowritebackup
-set directory=/tmp//           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
-set noswapfile                 "
+set directory=/tmp//           " prepend(^=) $HOME/.tmp/ to default path; use
+                               " full path as backup filename(//)
+set noswapfile                 " 
 
-set hidden                     " The current buffer can be put to the background without writing to disk
+set hidden                     " The current buffer can be put to the background
+                               " without writing to disk
 
 set hlsearch                   " highlight search
 set ignorecase                 " be case insensitive when searching
-set smartcase                  " be case sensitive when input has a capital letter
+set smartcase                  " be case sensitive when input has a capital
+                               " letter
 set incsearch                  " show matches while typing
 
 let mapleader = ' '
 let maplocalleader = '	'      " Tab as a local leader
 
-set scrolloff=5
+set scrolloff=7
 
 " "}}}
 
 " Formatting "{{{
-"set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
-"set fo-=r                      " Do not automatically insert a comment leader after an enter
-"set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
+"set fo+=o                      " Automatically insert the current comment
+                                " leader after hitting 'o' or 'O' in Normal mode
+"set fo-=r                      " Do not automatically insert a comment leader
+                                " after an enter
+"set fo-=t                      " Do no auto-wrap text using textwidth
+                                "(does not apply to comments)
 
 set formatoptions=tcroqnj
 
 "set nowrap
 set whichwrap+=<,>,h,l
 
-set textwidth=80                " 
+set textwidth=80                " Limit number of lines to 80
 set colorcolumn=+1
-hi ColorColumn ctermbg=0
+"hi ColorColumn ctermbg=236
 
 set tabstop=2                  " tab size eql 2 spaces
-set softtabstop=2
+"set softtabstop=2
 set shiftwidth=2               " default shift width for indents
 set expandtab                  " replace tabs with ${tabstop} spaces
 "set smarttab                   "
 
-set noshowmode                 " don't show the mode ("-- INSERT --") at the bottom
+set noshowmode                 " Don't show mode on bottom
 
 set backspace=indent
 set backspace+=eol
@@ -69,8 +124,8 @@ set backspace+=start
 
 set autoindent
 set cindent
-"set indentkeys-=0#            " do not break indent on #
-"set cinkeys-=0#
+set indentkeys-=0#            " do not break indent on #
+set cinkeys-=0#
 set cinkeys+=0=break
 set cinoptions=:s,cs
 set cinoptions+=b1,g0,N-s,t0,(0,W4
@@ -79,17 +134,28 @@ set cinwords+=for,switch,case
 " "}}}
 
 " Visual "{{{
-syntax on                      " enable syntax
 
-set mouse=a                   "enable mouse in GUI mode
+set t_Co=256 " set 256 colors on vim
+
+colorscheme kogyblack
+
+"let g:molokai_original = 1
+"colorscheme molokai           " Colorscheme
+"hi Normal ctermbg=none        " Enables transparency on terminal
+
+"syntax on                     " enable syntax
+
+set mouse=a                   " enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
 
 "set nonumber                  " line numbers Off
 set number
 
-set undofile                  " stores undo state even when files are closed (in undodir)
+set undofile                  " stores undo state even when files are closed (in
+                              " undodir)
 
 set cursorline                " Current line adornment
+"hi CursorLine cterm=none ctermbg=232
 
 set lazyredraw                " Don't redraw while executing macros
 
@@ -98,7 +164,8 @@ set magic
 set showmatch                 " Show matching brackets.
 set matchtime=2               " Bracket blinking.
 
-set wildmode=longest,list     " At command line, complete longest common string, then list alternatives.
+set wildmode=longest,list     " At command line, complete longest common string,
+                              " then list alternatives.
 set wildmenu                  " Completition with menu
 
 set completeopt+=preview
@@ -119,7 +186,8 @@ set showcmd                   " display an incomplete command in statusline
 
 set foldenable                " Turn on folding
 set foldmethod=marker         " Fold on the marker
-set foldlevel=100             " Don't autofold anything (but I can still fold manually)
+set foldlevel=100             " Don't autofold anything (but I can still fold
+                              " manually)
 
 set foldopen=block,hor,tag    " what movements open folds
 set foldopen+=percent,mark
@@ -155,22 +223,19 @@ nnoremap <leader>rs :source $MYVIMRC<CR>
 "nnoremap <leader>re :e ~/.vim/vimrc<CR>
 "nnoremap <leader>rd :e ~/.vim/ <CR>
 "nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
-nmap <leader>rc :edit $MYVIMRC<CR>
+nnoremap <leader>re :edit $MYVIMRC<CR>
 
 " Tabs
 nnoremap <localleader>h :tabprev<CR>
 nnoremap <localleader>l :tabnext<CR>
 
 " Buffers
-"nnoremap <localleader>- :bd<CR>
-"nnoremap <localleader>-- :bd!<CR>
+nnoremap <localleader>- :bd<CR>
+nnoremap <localleader>-- :bd!<CR>
 
 " Split line(opposite to S-J joining line)
 "nnoremap <S-k> gEa<CR><ESC>ew
 nnoremap <S-k> i<CR><ESC>
-
-"map <silent> <C-W>v :vnew<CR>
-"map <silent> <C-W>s :snew<CR>
 
 " Create line below
 map <S-CR> A<CR><ESC>
@@ -182,9 +247,14 @@ nnoremap <leader>EE :Vexplore!<CR><C-W>=
 " <Leader>{P,p} to paste copied outside vim
 nnoremap <silent> <Leader>P "+P
 nnoremap <silent> <Leader>p "+p
+vnoremap <silent> <Leader>p "+p
+inoremap <silent> <Leader>p <ESC>"+pa
 
-" <Leader>{y} to copy outside vim
+" <Leader>{Y,y} to copy outside vim
 nnoremap <silent> <Leader>y "+y
+vnoremap <silent> <Leader>y "+y
+" recursive map, 'cause Y have a mapping
+nmap <silent> <Leader>Y "+Y
 
 " Make Control-direction switch between windows (like C-W h, etc)
 nnoremap <leader>h <c-w>h
@@ -217,6 +287,10 @@ nnoremap <silent> <leader>n :nohlsearch<CR>
 cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 
+" Switches to the previous buffer that was shown in the current window, but also
+" closes the current buffer before switching to the previous one
+noremap <leader>bq <c-^> :bd #<cr>
+
 " For fast scrolling
 noremap <c-j> 15gj
 noremap <c-k> 15gk
@@ -247,12 +321,8 @@ vnoremap > >gv
 nnoremap L $
 nnoremap H ^
 
-" Get out insert and visual mode quickl
-inoremap ,. <ESC>
-vnoremap ,. <ESC>
-" LEARNING
-inoremap <ESC> <nop>
-vnoremap <ESC> <nop>
+" Maps 'Y' to yank to the end of the line
+nnoremap Y y$
 
 " " }}}
 
@@ -274,83 +344,74 @@ autocmd! BufWritePost .vimrc,_vimrc,vimrc
 
 " " }}}
 
-" Scripts and Plugins " {{{
-filetype off
-runtime macros/matchit.vim
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+" Scripts and Plugins Mappings " {{{
 
-Plugin 'gmarik/vundle' " let Vundle manage Vundle
-
-Plugin 'FSwitch'
-nnoremap <leader>sh :FSHere<CR>
+"""""""""""
+" FSwitch "
+"""""""""""
+nnoremap <leader>s  :FSHere<CR>
 nnoremap <leader>sl :FSSplitRight<CR>
 nnoremap <leader>sh :FSSplitLeft<CR>
 
-" Autocomplete "{{{
-" YouCompleteMe
-Plugin 'Valloric/YouCompleteMe'
+"""""""""""""""""
+" YouCompleteMe "
+"""""""""""""""""
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_register_as_syntastic_checker = 0
 
-" "}}}
-
-" Cpp Enhanced Highlight
-Plugin 'octol/vim-cpp-enhanced-highlight'
-
-" Syntastic
-Plugin 'scrooloose/syntastic'
+"""""""""""""
+" Syntastic "
+"""""""""""""
 let g:syntastic_check_on_open = 1
-"let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.8/', '/usr/include/wx-3.0/', '/usr/include/wx-3.0/wx/']
+
+"set error or warning signs
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+
+"whether to show balloons
+let g:syntastic_enable_balloons = 1
+let g:syntastic_auto_loc_list = 1
+
+"let g:syntastic_mode_map = { "mode": "passive" }
+hi SpellBad ctermbg=black
+hi SpellCap ctermbg=black
+
+" C++ Files
+"let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.8/',
+                                    "'/usr/include/wx-3.0/',
+                                    "'/usr/include/wx-3.0/wx/']
 let g:syntastic_cpp_include_dirs = ['/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0/', '/usr/include/wx-3.0/']
 let g:syntastic_cpp_remove_include_errors = 1
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++ `wx-config --cppflags` `wx-config --libs`'
-"set error or warning signs
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-"whether to show balloons
-let g:syntastic_enable_balloons = 1
-let g:syntastic_auto_loc_list = 1
-"let g:syntastic_mode_map = { "mode": "passive" }
-hi SpellBad ctermbg=black
-hi SpellCap ctermbg=black
 
-" Indent line
-Plugin 'Yggdroot/indentLine'
-let g:indentLine_color_term = 0
+" LaTeX Files
+let g:syntastic_tex_checkers=['chktex.vim']
 
-" Indent guides
-"Plugin 'nathanaelkane/vim-indent-guides'
+"""""""""""""""
+" Indent line "
+"""""""""""""""
+"let g:indentLine_color_term = 0
+
+"""""""""""""""""
+" Indent guides "
+"""""""""""""""""
 "let g:indent_guides_auto_colors = 0
-"let g:indent_guides_enable_on_vim_startup = 1
-"let g:indent_guides_color_change_percent = 7
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=0
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=8
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_color_change_percent = 7
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=none
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
 
-" Programming
-" Plugin 'Blackrush/vim-gocode'
-"Plugin 'fatih/vim-go'
-"Plugin 'derekwyatt/vim-scala'
-"Plugin 'tpope/vim-rails'
-
-
-" Dash.app
-"Plugin 'rizzatti/funcoo.vim'
-"Plugin 'rizzatti/dash.vim'
-
-
-" Syntax highlight
-Plugin 'gmarik/vim-markdown'
-"Plugin 'timcharper/textile.vim'
-
-" Git integration
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-fugitive'
+"""""""""""""""""""
+" Git integration "
+"""""""""""""""""""
+"Plugin 'tpope/vim-git'
+"Plugin 'tpope/vim-fugitive'
 "nnoremap <leader>W :Gwrite<CR>
 "nnoremap <leader>C :Gcommit -v<CR>
 "nnoremap <leader>S :Gstatus \| 7<CR>
@@ -358,31 +419,66 @@ Plugin 'tpope/vim-fugitive'
 "inoremap <leader>C <Esc><leader>C
 "inoremap <leader>S <Esc><leader>S
 
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-"Plugin 'tpope/vim-unimpaired'
-"
-Plugin 'sjl/gundo.vim'
-nnoremap <F5> :GundoToggle<CR>
+"""""""""
+" Gundo "
+"""""""""
+nnoremap <silent> <F5> :GundoToggle<CR>
 let g:gundo_close_on_revert=1
 "let g:gundo_width=80
 
+""""""""""""""
+" Easy Align "
+""""""""""""""
+vmap <Enter>          <Plug> (EasyAlign)
+vmap <Leader><Enter>  <Plug> (LiveEasyAlign)
 
-" Plugin 'SuperTab'
-Plugin 'bogado/file-line'
-Plugin 'vim-scripts/lastpos.vim'
-Plugin 'junegunn/vim-easy-align'
-vmap <Enter> <Plug>(EasyAlign)
-vmap <Leader><Enter>   <Plug>(LiveEasyAlign)
-
-
-Plugin 'Lokaltog/vim-easymotion'
+"""""""""""""""
+" Easy Motion "
+"""""""""""""""
 let g:EasyMotion_leader_key='<LocalLeader>'
 nmap <LocalLeader>h <Plug>(easymotion-linebackward)
 nmap <LocalLeader>j <Plug>(easymotion-j)
 nmap <LocalLeader>k <Plug>(easymotion-k)
 nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 
+"""""""""""
+" Airline "
+"""""""""""
+let g:airline_powerline_fonts = 1
+"let g:airline_theme='tomorrow'
+
+"let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
+"let g:airline_section_b = '' " airline#section#create_left(['mode', 'paste', 'iminsert'])
+"let g:airline_section_c = '' " airline#section#create(['hunks'])
+"let g:airline_section_gutter = airline#section#create(['%=%y%m%r[%{&ff}]'])
+"let g:airline_section_x = '' " airline#section#create_right(['filetype'])
+"" let g:airline_section_y = '%y%m%r%=[%{&ff}]' "airline#section#create_right(['ffenc'])
+"let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
+"let g:airline_section_warning = '' "airline#section#create(['whitespace'])
+
+
+"""""""""""
+" Session "
+"""""""""""
+" you also need to run :SaveSession once to create the default.vim session that
+" will then be autoloaded/saved from then on
+
+let g:session_autoload        = 'yes'
+let g:session_autosave        = 'yes'
+let g:session_default_to_last = 'yes'
+let g:session_directory       = '~/tmp/vim/sessions'
+
+
+" Programming
+"Plugin 'Blackrush/vim-gocode'
+"Plugin 'fatih/vim-go'
+"Plugin 'derekwyatt/vim-scala'
+"Plugin 'tpope/vim-rails'
+" Dash.app
+"Plugin 'rizzatti/funcoo.vim'
+"Plugin 'rizzatti/dash.vim'
+" Syntax highlight
+"Plugin 'tpope/vim-unimpaired'
 
 " FuzzyFinder
 "Plugin 'L9'
@@ -427,20 +523,5 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 "nnoremap <leader>ep :CtrlP public<cr>
 "nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
 "nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
-
-Plugin 'bling/vim-airline'
-set t_Co=256 " set 256 colors on vim
-let g:airline_powerline_fonts = 1
-
-"let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
-"let g:airline_section_b = '' " airline#section#create_left(['mode', 'paste', 'iminsert'])
-"let g:airline_section_c = '' " airline#section#create(['hunks'])
-"let g:airline_section_gutter = airline#section#create(['%=%y%m%r[%{&ff}]'])
-"let g:airline_section_x = '' " airline#section#create_right(['filetype'])
-"" let g:airline_section_y = '%y%m%r%=[%{&ff}]' "airline#section#create_right(['ffenc'])
-"let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
-"let g:airline_section_warning = '' "airline#section#create(['whitespace'])
-
-filetype plugin indent on      " Automatically detect file types.
 
 " " }}}
