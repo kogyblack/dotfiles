@@ -113,3 +113,6 @@ alias ..='cd ..'
 # Clang
 alias clang++11='clang++ -std=c++11'
 alias clangwx='clang++ -std=c++11 `wx-config --libs` `wx-config --cppflags`'
+
+# tmux
+alias tmux='tmux -2'

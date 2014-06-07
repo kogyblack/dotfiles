@@ -138,6 +138,10 @@ set cinwords+=for,switch,case
 
 set t_Co=256 " set 256 colors on vim
 
+if &term =~ '256color'
+  set t_ut=
+endif
+
 colorscheme kogyblack
 
 "let g:molokai_original = 1
