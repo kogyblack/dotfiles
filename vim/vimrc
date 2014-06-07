@@ -13,9 +13,9 @@ Plugin 'FSwitch'
 "Plugin 'Raimondi/delimitMate'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'scrooloose/syntastic'
-"Plugin 'Yggdroot/indentLine'
+Plugin 'Yggdroot/indentLine'
 Plugin 'timcharper/textile.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
+"Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'gmarik/vim-markdown'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
@@ -27,6 +27,7 @@ Plugin 'vim-scripts/lastpos.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
+Plugin 'msanders/snipmate.vim'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/Command-T'
@@ -226,8 +227,8 @@ nnoremap <leader>rs :source $MYVIMRC<CR>
 nnoremap <leader>re :edit $MYVIMRC<CR>
 
 " Tabs
-nnoremap <localleader>h :tabprev<CR>
-nnoremap <localleader>l :tabnext<CR>
+"nnoremap <localleader>h :tabprev<CR>
+"nnoremap <localleader>l :tabnext<CR>
 
 " Buffers
 nnoremap <localleader>- :bd<CR>
@@ -238,21 +239,21 @@ nnoremap <localleader>-- :bd!<CR>
 nnoremap <S-k> i<CR><ESC>
 
 " Create line below
-map <S-CR> A<CR><ESC>
+nnoremap <S-CR> A<CR><ESC>
 
 " Explorer
-nnoremap <leader>E :Explore<CR>
-nnoremap <leader>EE :Vexplore!<CR><C-W>=
+"nnoremap <leader>E :Explore<CR>
+"nnoremap <leader>EE :Vexplore!<CR><C-W>=
 
 " <Leader>{P,p} to paste copied outside vim
 nnoremap <silent> <Leader>P "+P
 nnoremap <silent> <Leader>p "+p
 vnoremap <silent> <Leader>p "+p
-inoremap <silent> <Leader>p <ESC>"+pa
+"inoremap <silent> <Leader>p <ESC>"+pa
 
 " <Leader>{Y,y} to copy outside vim
 nnoremap <silent> <Leader>y "+y
-vnoremap <silent> <Leader>y "+y
+noremap <silent> <Leader>y "+y
 " recursive map, 'cause Y have a mapping
 nmap <silent> <Leader>Y "+Y
 
@@ -264,8 +265,11 @@ nnoremap <leader>l <c-w>l
 
 " Splitting window
 "nnoremap <leader>v :vnew<CR>
-nnoremap <leader>v <C-W>v<CR>
+"nnoremap <leader>v <C-W>v<CR>
 "nnoremap <leader>s <C-w>s
+nnoremap <leader>v :vsp<CR>
+"nnoremap <leader>h :split<CR>
+nnoremap <leader>s :split<CR>
 
 " Remap search to center match
 nnoremap <silent> n nzz
@@ -279,7 +283,8 @@ nnoremap <silent> # #zz
 
 " Erase highlights
 "nnoremap <S-Space> :noh<CR>
-nnoremap <silent> <leader>n :nohlsearch<CR>
+"nnoremap <silent> <leader>n :nohlsearch<CR>
+nnoremap <silent> <leader><CR> :noh<CR>
 
 " Now we don't have to move our fingers so far when we want to scroll through
 " the command history; also, don't forget the q: command (see :h q: for more
@@ -324,6 +329,13 @@ nnoremap H ^
 " Maps 'Y' to yank to the end of the line
 nnoremap Y y$
 
+" Adds quick quit
+nnoremap <leader>q :q<cr>
+
+" Adds quick quit insert mode
+inoremap ,. <esc>
+inoremap <esc> <nop>
+
 " " }}}
 
 " AutoCommands " {{{
@@ -349,8 +361,9 @@ autocmd! BufWritePost .vimrc,_vimrc,vimrc
 """""""""""
 " FSwitch "
 """""""""""
+"nnoremap <leader>s  :FSHere<CR>
 nnoremap <leader>s  :FSHere<CR>
-nnoremap <leader>sl :FSSplitRight<CR>
+nnoremap <leader>sv :FSSplitRight<CR>
 nnoremap <leader>sh :FSSplitLeft<CR>
 
 """""""""""""""""
@@ -366,7 +379,7 @@ let g:ycm_register_as_syntastic_checker = 0
 """""""""""""
 " Syntastic "
 """""""""""""
-let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_open = 1
 
 "set error or warning signs
 let g:syntastic_error_symbol = '✗'
@@ -396,14 +409,14 @@ let g:syntastic_tex_checkers=['chktex.vim']
 """""""""""""""
 " Indent line "
 """""""""""""""
-"let g:indentLine_color_term = 0
+let g:indentLine_color_term = 0
 
 """""""""""""""""
 " Indent guides "
 """""""""""""""""
 "let g:indent_guides_auto_colors = 0
-let g:indent_guides_enable_on_vim_startup = 0
-let g:indent_guides_color_change_percent = 7
+"let g:indent_guides_enable_on_vim_startup = 0
+"let g:indent_guides_color_change_percent = 7
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=none
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
 
@@ -429,8 +442,8 @@ let g:gundo_close_on_revert=1
 """"""""""""""
 " Easy Align "
 """"""""""""""
-vmap <Enter>          <Plug> (EasyAlign)
-vmap <Leader><Enter>  <Plug> (LiveEasyAlign)
+vmap <Enter>          <Plug>(EasyAlign)
+vmap <Leader><Enter>  <Plug>(LiveEasyAlign)
 
 """""""""""""""
 " Easy Motion "
