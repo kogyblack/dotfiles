@@ -39,6 +39,12 @@ then
   ln -s $script_dir/tmux/tmux.conf.local ~/.tmux.conf.local
 fi
 
+# gdb
+if [[ ! -a ~/.gbdinit ]]
+then
+  ls -s $script_dir/gdb/gdbinit ~/.gdbinit
+fi
+
 # vim plugins
 # YouCompleteMe
 #if [[ ! -a ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py ]]
