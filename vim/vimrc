@@ -366,8 +366,8 @@ autocmd! BufWritePost .vimrc,_vimrc,vimrc
 " FSwitch "
 """""""""""
 "nnoremap <leader>s  :FSHere<CR>
-nnoremap <leader>s  :FSHere<CR>
-nnoremap <leader>sv :FSSplitRight<CR>
+nnoremap <leader>sj :FSHere<CR>
+nnoremap <leader>sl :FSSplitRight<CR>
 nnoremap <leader>sh :FSSplitLeft<CR>
 
 """""""""""""""""
