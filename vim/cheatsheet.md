@@ -45,8 +45,8 @@ gE: Backward to the end of the WORD [count]
 m{a-zA-Z}: Set mark {a-zA-Z} at the cursor position
 '{a-z}: Move to the first non-blank character on the line with mark given (linewise)
 '{A-Z0-9}: Same as above, but moves to other files too
-`{a-z}: Move to the mark given   `  #MUST CHANGE THIS!!
-`{A-Z0-9}: Move to the mark given in the correct file    `
+`{a-z}: Move to the mark given`
+`{A-Z0-9}: Move to the mark given in the correct file`
 :marks  List all marks
 
 ### Search and replace
@@ -141,29 +141,26 @@ My Bindings "{{{
 
 ###My bindings
 
-,rs : sources $MYVIMRC
-,rc : edit $MYVIMRC
+<Space>rs : sources $MYVIMRC
+<Space>re : edit $MYVIMRC
 
-<Tab>h : previous tab
-<Tab>l : next tab
+<Space>h : move to the left window
+<Space>j : move to the bottom window
+<Space>k : move to the top window
+<Space>l : move to the right window
 
 <Tab>- : unloads buffer
 <Tab>-- : unloads buffer (if changes were made, they will be lost)
 
 <Shift><Enter> : Creates an empty line below
 
-,E : Enters explorer (horizontal split)
-,EE : Enters explorer (vertical split)
+<Space>p : Paste clipboard (or whatever in the register "+) after cursor
+<Space>P : Paste clipboard (or whatever in the register "+) before cursor
 
-,p : Paste clipboard (or whatever in the register "+) after cursor
-,P : Paste clipboard (or whatever in the register "+) before cursor
+<Space>v : New window (vertical split)
+<Space>s : New window (horizontal split)
 
-<Ctrl>[hjkl] : Moves to window on [left,down,up,right]
-
-,v : New window (vertical split)
-,s : New window (horizontal split)
-
-,n : erases highlights
+<Space><Enter> : erases highlights
 
 <F12> : toggle shown special characters (tab, trailing whitespaces, etc)
 
@@ -176,9 +173,11 @@ My Bindings "{{{
 " Easy Align
 in visual:
 <Enter> : Enters easy align
-,<Enter> : Enters easy align interactively
+<Space><Enter> : Enters easy align interactively
 
 " Easy motion
+<Tab>w : easy motion to beginning of words
+<Tab>f [c] : easy motion to all characters [c] only
 <Tab>[hjkl] : easy motion to motion direction
 
 "}}}
