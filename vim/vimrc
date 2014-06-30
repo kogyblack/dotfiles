@@ -29,7 +29,9 @@ Plugin 'vim-scripts/lastpos.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
-Plugin 'msanders/snipmate.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'ervandew/supertab'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/Command-T'
@@ -51,6 +53,10 @@ filetype plugin indent on      " Automatically detect file types.
 
 
 " General "{{{
+
+" Should be the last entry (for UltiSnips)
+set rtp+=$HOME/git/dotfiles/vim
+
 set nocompatible               " be iMproved
 
 scriptencoding utf-8           " utf-8 all the way
@@ -104,7 +110,8 @@ set scrolloff=7
 "set fo-=t                      " Do no auto-wrap text using textwidth
                                 "(does not apply to comments)
 
-set formatoptions=tcroqnj
+"set formatoptions=tcroqnj
+set formatoptions=tcrqnj
 
 "set nowrap
 set whichwrap+=<,>,h,l
@@ -276,7 +283,7 @@ nnoremap <leader>l <c-w>l
 "nnoremap <leader>s <C-w>s
 nnoremap <leader>v :vsp<CR>
 "nnoremap <leader>h :split<CR>
-nnoremap <leader>s :split<CR>
+nnoremap <leader>vv :split<CR>
 
 " Remap search to center match
 nnoremap <silent> n nzz
@@ -342,6 +349,7 @@ nnoremap <leader>q :q<cr>
 " Adds quick quit insert mode
 inoremap ,. <esc>
 inoremap <esc> <nop>
+vnoremap ,. <esc>
 
 " " }}}
 
@@ -383,6 +391,10 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_register_as_syntastic_checker = 0
+
+" Using with UltiSnips and PowerTab
+"let g:ycm_key_list_select_completion = ['<C-Tab>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-S-Tab>', '<Up>']
 
 """""""""""""
 " Syntastic "
@@ -489,6 +501,26 @@ let g:session_autoload        = 'yes'
 let g:session_autosave        = 'yes'
 "let g:session_directory       = '~/.vim/sessions'
 
+"""""""""""""
+" UltiSnips "
+"""""""""""""
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+"let g:UltiSnipsExpandTrigger       = "<leader>s"
+"let g:UltiSnipsExpandTrigger       = "<tab>"
+"let g:UltiSnipsListSnippets        = "<c-tab>"
+"let g:UltiSnipsJumpForwardTrigger  = "<tab>"
+"let g:UltiSnipsExpandTrigger       = "<leader>s"
+let g:UltiSnipsExpandTrigger       = "<leader>\\"
+"let g:UltiSnipsListSnippets        = "<>"
+let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:UltiSnipsSnippetsDir = $HOME . "/git/dotfiles/vim/UltiSnips"
+
+"""""""""""""
+" PowerTabs "
+"""""""""""""
+" This makes UltiSnips and YCM work with <tab>
+"let g:SuperTabDefaultCompletionType = '<C-Tab>'
 
 " Programming
 "Plugin 'Blackrush/vim-gocode'
