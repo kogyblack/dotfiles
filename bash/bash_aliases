@@ -109,6 +109,7 @@ export PS1="$Black$Time12h $Yellow$PathShort$Color_Off\$ "
 alias ls='ls -pX --color=always'
 #alias la='ls -pa --color=always'
 alias ..='cd ..'
+alias j='jobs'
 
 # Clang
 alias clang++11='clang++ -std=c++11'
