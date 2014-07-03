@@ -117,7 +117,7 @@ set formatoptions=tcrqnj
 set whichwrap+=<,>,h,l
 
 set wrap
-set textwidth=80                " Limit number of lines to 80
+set textwidth=79                " Limit number of lines to 80
 set colorcolumn=+1
 "hi ColorColumn ctermbg=236
 
