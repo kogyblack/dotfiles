@@ -10,7 +10,7 @@
     use_system_font = False
     foreground_color = "#ffffff"
     show_titlebar = False
-    font = Envy Code R 10
+    font = DejaVu Sans Mono 10
 [layouts]
   [[default]]
     [[[child1]]]
