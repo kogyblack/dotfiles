@@ -39,6 +39,8 @@ Plugin 'wincent/Command-T'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 
+Plugin 'FredKSchott/CoVim'
+
 " Colorscheme
 Plugin 'tomasr/molokai'
 Plugin 'kogyblack/vim-kogy-colorscheme'
@@ -166,7 +168,7 @@ set mousehide                 " Hide mouse after chars typed
 "set nonumber                  " line numbers Off
 set number
 
-set undofile                  " stores undo state even when files are closed (in
+"set undofile                  " stores undo state even when files are closed (in
                               " undodir)
 
 set cursorline                " Current line adornment
@@ -362,6 +364,7 @@ au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         setl ft=ma
 "au BufRead,BufNewFile {*.scala}                                       setl ft=scala
 "au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gitcommit noml list| norm 1G
 "au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
+au BufRead,BufNewFile {*.py,*.pyw}     setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
 
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
@@ -422,6 +425,9 @@ let g:syntastic_cpp_remove_include_errors = 1
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++ `wx-config --cppflags` `wx-config --libs`'
+
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore=E501'
 
 " LaTeX Files
 let g:syntastic_tex_checkers=['chktex.vim']
