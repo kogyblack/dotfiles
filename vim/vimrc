@@ -31,7 +31,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/Command-T'
@@ -39,7 +39,7 @@ Plugin 'wincent/Command-T'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 
-Plugin 'FredKSchott/CoVim'
+"Plugin 'FredKSchott/CoVim'
 
 " Colorscheme
 Plugin 'tomasr/molokai'
@@ -389,11 +389,11 @@ nnoremap <leader>sh :FSSplitLeft<CR>
 " YouCompleteMe "
 """""""""""""""""
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_collect_identifiers_from_tag_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_register_as_syntastic_checker = 0
+"let g:ycm_collect_identifiers_from_tag_files = 1
+"let g:ycm_seed_identifiers_with_syntax = 1
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_register_as_syntastic_checker = 0
 
 " Using with UltiSnips and PowerTab
 "let g:ycm_key_list_select_completion = ['<C-Tab>', '<Down>']
@@ -402,35 +402,35 @@ let g:ycm_register_as_syntastic_checker = 0
 """""""""""""
 " Syntastic "
 """""""""""""
-"let g:syntastic_check_on_open = 1
-
-"set error or warning signs
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-
-"whether to show balloons
-let g:syntastic_enable_balloons = 1
-let g:syntastic_auto_loc_list = 1
-
-"let g:syntastic_mode_map = { "mode": "passive" }
-hi SpellBad ctermbg=black
-hi SpellCap ctermbg=black
+""let g:syntastic_check_on_open = 1
+"
+""set error or warning signs
+"let g:syntastic_error_symbol = '✗'
+"let g:syntastic_warning_symbol = '⚠'
+"
+""whether to show balloons
+""let g:syntastic_enable_balloons = 1
+""let g:syntastic_auto_loc_list = 1
+"
+""let g:syntastic_mode_map = { "mode": "passive" }
+"hi SpellBad ctermbg=black
+"hi SpellCap ctermbg=black
 
 " C++ Files
 "let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.8/',
                                     "'/usr/include/wx-3.0/',
                                     "'/usr/include/wx-3.0/wx/']
-let g:syntastic_cpp_include_dirs = ['/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0/', '/usr/include/wx-3.0/']
-let g:syntastic_cpp_remove_include_errors = 1
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++ `wx-config --cppflags` `wx-config --libs`'
+"let g:syntastic_cpp_include_dirs = ['/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0/', '/usr/include/wx-3.0/']
+"let g:syntastic_cpp_remove_include_errors = 1
+"let g:syntastic_cpp_check_header = 1
+"let g:syntastic_cpp_compiler = 'clang++'
+"let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++ `wx-config --cppflags` `wx-config --libs`'
 
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore=E501'
+"let g:syntastic_python_checkers = ['flake8']
+"let g:syntastic_python_flake8_args = '--ignore=E501'
 
 " LaTeX Files
-let g:syntastic_tex_checkers=['chktex.vim']
+"let g:syntastic_tex_checkers=['chktex.vim']
 
 """""""""""""""
 " Indent line "
@@ -484,16 +484,6 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 " Airline "
 """""""""""
 let g:airline_powerline_fonts = 1
-"let g:airline_theme='tomorrow'
-
-"let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
-"let g:airline_section_b = '' " airline#section#create_left(['mode', 'paste', 'iminsert'])
-"let g:airline_section_c = '' " airline#section#create(['hunks'])
-"let g:airline_section_gutter = airline#section#create(['%=%y%m%r[%{&ff}]'])
-"let g:airline_section_x = '' " airline#section#create_right(['filetype'])
-"" let g:airline_section_y = '%y%m%r%=[%{&ff}]' "airline#section#create_right(['ffenc'])
-"let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
-"let g:airline_section_warning = '' "airline#section#create(['whitespace'])
 
 
 """""""""""
@@ -510,90 +500,20 @@ let g:session_autosave        = 'yes'
 """""""""""""
 " UltiSnips "
 """""""""""""
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger       = "<leader>s"
-"let g:UltiSnipsExpandTrigger       = "<tab>"
-"let g:UltiSnipsListSnippets        = "<c-tab>"
-"let g:UltiSnipsJumpForwardTrigger  = "<tab>"
-"let g:UltiSnipsExpandTrigger       = "<leader>s"
-let g:UltiSnipsExpandTrigger       = "<leader>\\"
-"let g:UltiSnipsListSnippets        = "<>"
-let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-let g:UltiSnipsSnippetsDir = $HOME . "/git/dotfiles/vim/UltiSnips"
+"" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+""let g:UltiSnipsExpandTrigger       = "<leader>s"
+""let g:UltiSnipsExpandTrigger       = "<tab>"
+""let g:UltiSnipsListSnippets        = "<c-tab>"
+""let g:UltiSnipsJumpForwardTrigger  = "<tab>"
+""let g:UltiSnipsExpandTrigger       = "<leader>s"
+"let g:UltiSnipsExpandTrigger       = "<leader>\\"
+""let g:UltiSnipsListSnippets        = "<>"
+"let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+"let g:UltiSnipsSnippetsDir = $HOME . "/git/dotfiles/vim/UltiSnips"
 
-"""""""""""""
-" PowerTabs "
-"""""""""""""
-" This makes UltiSnips and YCM work with <tab>
-"let g:SuperTabDefaultCompletionType = '<C-Tab>'
-
-" Programming
-"Plugin 'Blackrush/vim-gocode'
-"Plugin 'fatih/vim-go'
-"Plugin 'derekwyatt/vim-scala'
-"Plugin 'tpope/vim-rails'
-" Dash.app
-"Plugin 'rizzatti/funcoo.vim'
-"Plugin 'rizzatti/dash.vim'
 " Syntax highlight
 "Plugin 'tpope/vim-unimpaired'
 
-" FuzzyFinder
-"Plugin 'L9'
-"Plugin 'FuzzyFinder'
-"" FuF customisations "{{{
-"let g:fuf_modesDisable = []
-"nnoremap <leader>h :FufHelp<CR>
-"nnoremap <leader>1  :FufTagWithCursorWord<CR>
-"nnoremap <leader>11 :FufTag<CR>
-"nnoremap <leader>2  :FufFileWithCurrentBufferDir<CR>
-"nnoremap <leader>22 :FufFile<CR>
-"nnoremap <leader>3  :FufBuffer<CR>
-"nnoremap <leader>4  :FufDirWithCurrentBufferDir<CR>
-"nnoremap <leader>44 :FufDir<CR>
-"nnoremap <leader>5  :FufBufferTag<CR>
-"nnoremap <leader>55 :FufBufferTagAll<CR>
-"nnoremap <leader>6  :FufMruFile<CR>
-"nnoremap <leader>7  :FufLine<CR>
-"nnoremap <leader>8  :FufChangeList<CR>
-"nnoremap <leader>9  :FufTaggedFile<CR>
-"
-"nnoremap <leader>p :FufDir ~/src/<CR>
-"nnoremap <leader>ge :FufDir ~/.rvm/gems/<CR>
-"
-"nnoremap <leader>gn :vnew \| :FufFile ~/src/notes/<CR>
-
-" " }}}
-
-
-"Plugin 'kien/ctrlp.vim'
-"let g:ctrlp_map = '<leader>t'
-"let g:ctrlp_max_height = 30
-"let g:ctrlp_match_window_bottom=1
-"let g:ctrlp_max_height = 20
-"let g:ctrlp_match_window_reversed = 1
-"let g:ctrlp_switch_buffer = 'e'
-"nnoremap <leader>ev :CtrlP app/views<cr>
-"nnoremap <leader>ec :CtrlP app/controllers<cr>
-"nnoremap <leader>em :CtrlP app/models<cr>
-"nnoremap <leader>el :CtrlP lib<cr>
-"nnoremap <leader>ea :CtrlP app/assets<cr>
-"nnoremap <leader>ep :CtrlP public<cr>
-"nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
-"nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""                              fuzzyfinder                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" This turns on the mrufile and mrucmd modes
-"let g:fuf_modesDisable    = []
-"let g:fuf_mrufile_maxItem = 1000
-"let g:fuf_mrucmd_maxItem  = 400
-"let g:fuf_file_exclude    = '\v\~$|\.(o|exe|dll|bak|class|meta|lock|orig|jar|swp)$|/test/data\.|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-"
-"nnoremap <Leader>fm :FufMruFile<CR>
-"nnoremap <Leader>fc :FufMruCmd<CR>
 
 " " }}}
