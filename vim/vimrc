@@ -10,14 +10,10 @@ call vundle#rc()
 
 Plugin 'gmarik/vundle' " let Vundle manage Vundle
 Plugin 'FSwitch'
-"Plugin 'L9'
-"Plugin 'FuzzyFinder'
-"Plugin 'Raimondi/delimitMate'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'timcharper/textile.vim'
-"Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'gmarik/vim-markdown'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
@@ -31,7 +27,6 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-"Plugin 'ervandew/supertab'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/Command-T'
@@ -39,15 +34,9 @@ Plugin 'wincent/Command-T'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 
-"Plugin 'FredKSchott/CoVim'
-
 " Colorscheme
 Plugin 'tomasr/molokai'
 Plugin 'kogyblack/vim-kogy-colorscheme'
-"Plugin 'matthewtodd/vim-twilight'
-"Plugin 'altercation/vim-colors-solarized.git'
-"Plugin 'jnurmine/Zenburn'
-"Plugin 'wesgibbs/vim-irblack'
 
 filetype plugin indent on      " Automatically detect file types.
 
@@ -120,7 +109,7 @@ set whichwrap+=<,>,h,l
 
 set wrap
 set textwidth=79                " Limit number of lines to 80
-set colorcolumn=+1
+"set colorcolumn=+1
 "hi ColorColumn ctermbg=236
 
 set tabstop=2                  " tab size eql 2 spaces

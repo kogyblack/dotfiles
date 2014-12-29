@@ -15,6 +15,11 @@ then
   ln -s $script_dir/bash/bash_aliases ~/.bash_aliases
 fi
 
+if [[ ! -a ~/.inputrc ]]
+then
+  ln -s $script_dir/bash/inputrc ~/.inputrc
+fi
+
 # vim
 if [[ ! -a ~/.vimrc ]]
 then
