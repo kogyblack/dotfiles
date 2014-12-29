@@ -49,10 +49,10 @@ git config --global color.ui true
 # With this, "git pull --rebase" is the default form of pull FOR NEWLY CREATED
 # BRANCHES; for branches created before this config option is set, pull.rebase
 # true handles that
-git config --global branch.autosetuprebase always
+#git config --global branch.autosetuprebase always
 
 # "git pull --rebase" is now the default for pull no matter what
-git config --global pull.rebase true
+#git config --global pull.rebase true
 
 # This makes sure that push pushes only the current branch, and pushes it to the
 # same branch pull would pull from

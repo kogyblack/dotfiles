@@ -47,10 +47,10 @@ fi
 
 # vim plugins
 # YouCompleteMe
-if [[ ! -a ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py ]]
-then
-  mkdir -p ~/.vim/bundle/YouCompleteMe/cpp/ycm
-  ln -s $script_dir/vim/YouCompleteMe/ycm_extra_conf.py ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py
-fi
+#if [[ ! -a ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py ]]
+#then
+#  mkdir -p ~/.vim/bundle/YouCompleteMe/cpp/ycm
+#  ln -s $script_dir/vim/YouCompleteMe/ycm_extra_conf.py ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py
+#fi
 
 source $script_dir/gitconfig_setup.sh
