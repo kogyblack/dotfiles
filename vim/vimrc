@@ -13,29 +13,29 @@ Plugin 'FSwitch'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
-Plugin 'timcharper/textile.vim'
-Plugin 'gmarik/vim-markdown'
+"Plugin 'timcharper/textile.vim'
+"Plugin 'gmarik/vim-markdown'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'sjl/gundo.vim'
+"Plugin 'sjl/gundo.vim'
 Plugin 'bogado/file-line'
 Plugin 'vim-scripts/lastpos.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+"Plugin 'honza/vim-snippets'
 
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/Command-T'
 
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-session'
 
 " Colorscheme
-Plugin 'tomasr/molokai'
+"Plugin 'tomasr/molokai'
 Plugin 'kogyblack/vim-kogy-colorscheme'
 
 filetype plugin indent on      " Automatically detect file types.
@@ -86,43 +86,31 @@ set smartcase                  " be case sensitive when input has a capital
                                " letter
 set incsearch                  " show matches while typing
 
-let mapleader = ' '
+let mapleader = ','
 let maplocalleader = '	'      " Tab as a local leader
 
-set scrolloff=7
+set scrolloff=10
 
 " "}}}
 
 " Formatting "{{{
-"set fo+=o                      " Automatically insert the current comment
-                                " leader after hitting 'o' or 'O' in Normal mode
-"set fo-=r                      " Do not automatically insert a comment leader
-                                " after an enter
-"set fo-=t                      " Do no auto-wrap text using textwidth
-                                "(does not apply to comments)
 
-"set formatoptions=tcroqnj
-set formatoptions=tcrqnj
-
-"set nowrap
+"set formatoptions=tcrqnj  " Need testing!!!
+set formatoptions=cqnj
+set nowrap
 set whichwrap+=<,>,h,l
 
-set wrap
-set textwidth=79                " Limit number of lines to 80
+"set textwidth=80                " Limit number of lines to 80
 "set colorcolumn=+1
 "hi ColorColumn ctermbg=236
 
 set tabstop=2                  " tab size eql 2 spaces
 "set softtabstop=2
-set shiftwidth=2               " default shift width for indents
 set expandtab                  " replace tabs with ${tabstop} spaces
-"set smarttab                   "
 
 set noshowmode                 " Don't show mode on bottom
 
-set backspace=indent
-set backspace+=eol
-set backspace+=start
+set backspace=indent,eol,start
 
 set autoindent
 set cindent
@@ -154,7 +142,6 @@ colorscheme kogyblack
 set mouse=a                   " enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
 
-"set nonumber                  " line numbers Off
 set number
 
 "set undofile                  " stores undo state even when files are closed (in
@@ -168,27 +155,20 @@ set lazyredraw                " Don't redraw while executing macros
 set magic
 
 set showmatch                 " Show matching brackets.
-set matchtime=2               " Bracket blinking.
 
-set wildmode=longest,list     " At command line, complete longest common string,
+"set wildmode=longest,list     " At command line, complete longest common string,
                               " then list alternatives.
 set wildmenu                  " Completition with menu
-
-set completeopt+=preview
 
 set novisualbell              " No blinking
 set noerrorbells              " No noise.
 set vb t_vb=                  " disable any beeps or flashes on error
 
 set laststatus=2              " always show status line.
-set shortmess=atI             " shortens messages
+                              " Required for Airline
+"set shortmess=atI             " shortens messages
+set shortmess=atIo
 set showcmd                   " display an incomplete command in statusline
-
-"set statusline=%<%f\          " custom statusline
-"set stl+=[%{&ff}]             " show fileformat
-"set stl+=%y%m%r%=
-"set stl+=%-14.(%l,%c%V%)\ %P
-
 
 set foldenable                " Turn on folding
 set foldmethod=marker         " Fold on the marker
@@ -205,7 +185,6 @@ set splitbelow
 set splitright
 
 set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
-map <silent> <F12> :set invlist<CR>
 
 " "}}}
 
@@ -213,22 +192,16 @@ map <silent> <F12> :set invlist<CR>
 
 " Swap ; and :, since : is used way more than ;
 nnoremap ; :
-nnoremap : ;
 vnoremap ; :
-vnoremap : ;
+"nnoremap : ;
+"vnoremap : ;
 
 " Swap ` and '
 nnoremap ' `
-nnoremap ` '
 vnoremap ' `
+nnoremap ` '
 vnoremap ` '
 
-"nnoremap <leader>rs :source ~/.vimrc<CR>
-nnoremap <leader>rs :source $MYVIMRC<CR>
-"nnoremap <leader>rt :tabnew ~/.vim/vimrc<CR>
-"nnoremap <leader>re :e ~/.vim/vimrc<CR>
-"nnoremap <leader>rd :e ~/.vim/ <CR>
-"nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 nnoremap <leader>re :edit $MYVIMRC<CR>
 
 " Tabs
@@ -236,19 +209,14 @@ nnoremap <leader>re :edit $MYVIMRC<CR>
 "nnoremap <localleader>l :tabnext<CR>
 
 " Buffers
-nnoremap <localleader>- :bd<CR>
-nnoremap <localleader>-- :bd!<CR>
+"nnoremap <localleader>- :bd<CR>
+"nnoremap <localleader>-- :bd!<CR>
 
 " Split line(opposite to S-J joining line)
-"nnoremap <S-k> gEa<CR><ESC>ew
 nnoremap <S-k> i<CR><ESC>
 
 " Create line below
-nnoremap <S-CR> A<CR><ESC>
-
-" Explorer
-"nnoremap <leader>E :Explore<CR>
-"nnoremap <leader>EE :Vexplore!<CR><C-W>=
+"nnoremap <s-cr> A<CR><ESC>
 
 " <Leader>{P,p} to paste copied outside vim
 nnoremap <silent> <Leader>P "+P
@@ -258,9 +226,9 @@ vnoremap <silent> <Leader>p "+p
 
 " <Leader>{Y,y} to copy outside vim
 nnoremap <silent> <Leader>y "+y
-noremap <silent> <Leader>y "+y
+nnoremap <silent> <Leader>y "+y
 " recursive map, 'cause Y have a mapping
-nmap <silent> <Leader>Y "+Y
+nnoremap <silent> <Leader>Y "+Y
 
 " Make Control-direction switch between windows (like C-W h, etc)
 nnoremap <leader>h <c-w>h
@@ -269,11 +237,7 @@ nnoremap <leader>k <c-w>k
 nnoremap <leader>l <c-w>l
 
 " Splitting window
-"nnoremap <leader>v :vnew<CR>
-"nnoremap <leader>v <C-W>v<CR>
-"nnoremap <leader>s <C-w>s
 nnoremap <leader>v :vsp<CR>
-"nnoremap <leader>h :split<CR>
 nnoremap <leader>vv :split<CR>
 
 " Remap search to center match
@@ -287,9 +251,7 @@ nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 
 " Erase highlights
-"nnoremap <S-Space> :noh<CR>
-"nnoremap <silent> <leader>n :nohlsearch<CR>
-nnoremap <silent> <leader><CR> :noh<CR>
+nnoremap <silent> <leader>n :noh<CR>
 
 " Now we don't have to move our fingers so far when we want to scroll through
 " the command history; also, don't forget the q: command (see :h q: for more
@@ -338,28 +300,32 @@ nnoremap Y y$
 nnoremap <leader>q :q<cr>
 
 " Adds quick quit insert mode
+nnoremap ,. <esc>
 inoremap ,. <esc>
-inoremap <esc> <nop>
 vnoremap ,. <esc>
 
 " " }}}
 
 " AutoCommands " {{{
-"au BufRead,BufNewFile {*.go}                                          setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
-" autocmd FileType go compiler go
-au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-"au BufRead,BufNewFile {*.local}                                       setl ft=sh
-au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         setl ft=markdown
-"au BufRead,BufNewFile {*.scala}                                       setl ft=scala
-"au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gitcommit noml list| norm 1G
-"au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
-au BufRead,BufNewFile {*.py,*.pyw}     setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
+augroup vimrc_autocmds
+  "au BufRead,BufNewFile {*.go}                                          setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
+  au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+  au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         setl ft=markdown
+  "au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gitcommit noml list| norm 1G
+  "au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
+  au BufRead,BufNewFile {*.py,*.pyw}     setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
 
-" open help in vertical split
-au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
+  " open help in vertical split
+  au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
 
-autocmd! BufWritePost .vimrc,_vimrc,vimrc
-        \ source $MYVIMRC | AirlineRefresh
+  " Update Airline
+  autocmd! BufWritePost .vimrc,_vimrc,vimrc
+          \ source $MYVIMRC | AirlineRefresh
+
+  " Highlight lines with more than 80 length
+  autocmd BufEnter,BufWritePost * highlight OverLength ctermbg=236
+  autocmd BufEnter,BufWritePost * match OverLength /\%81v./
+augroup END
 
 " " }}}
 
@@ -377,16 +343,12 @@ nnoremap <leader>sh :FSSplitLeft<CR>
 """""""""""""""""
 " YouCompleteMe "
 """""""""""""""""
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 "let g:ycm_collect_identifiers_from_tag_files = 1
 "let g:ycm_seed_identifiers_with_syntax = 1
 "let g:ycm_confirm_extra_conf = 0
 "let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_register_as_syntastic_checker = 0
-
-" Using with UltiSnips and PowerTab
-"let g:ycm_key_list_select_completion = ['<C-Tab>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<C-S-Tab>', '<Up>']
 
 """""""""""""
 " Syntastic "
@@ -426,33 +388,11 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extr
 """""""""""""""
 let g:indentLine_color_term = 0
 
-"""""""""""""""""
-" Indent guides "
-"""""""""""""""""
-"let g:indent_guides_auto_colors = 0
-"let g:indent_guides_enable_on_vim_startup = 0
-"let g:indent_guides_color_change_percent = 7
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=none
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=233
-
-"""""""""""""""""""
-" Git integration "
-"""""""""""""""""""
-"Plugin 'tpope/vim-git'
-"Plugin 'tpope/vim-fugitive'
-"nnoremap <leader>W :Gwrite<CR>
-"nnoremap <leader>C :Gcommit -v<CR>
-"nnoremap <leader>S :Gstatus \| 7<CR>
-"inoremap <leader>W <Esc><leader>W
-"inoremap <leader>C <Esc><leader>C
-"inoremap <leader>S <Esc><leader>S
-
 """""""""
 " Gundo "
 """""""""
-nnoremap <silent> <F5> :GundoToggle<CR>
-let g:gundo_close_on_revert=1
-"let g:gundo_width=80
+"nnoremap <silent> <F5> :GundoToggle<CR>
+"let g:gundo_close_on_revert=1
 
 """"""""""""""
 " Easy Align "
@@ -472,7 +412,7 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 """""""""""
 " Airline "
 """""""""""
-let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 1
 
 
 """""""""""
@@ -481,9 +421,9 @@ let g:airline_powerline_fonts = 1
 " you also need to run :SaveSession once to create the default.vim session that
 " will then be autoloaded/saved from then on
 
-let g:session_default_to_last = 'yes'
-let g:session_autoload        = 'yes'
-let g:session_autosave        = 'yes'
+"let g:session_default_to_last = 'yes'
+"let g:session_autoload        = 'yes'
+"let g:session_autosave        = 'yes'
 "let g:session_directory       = '~/.vim/sessions'
 
 """""""""""""
@@ -500,9 +440,5 @@ let g:session_autosave        = 'yes'
 "let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
 "let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 "let g:UltiSnipsSnippetsDir = $HOME . "/git/dotfiles/vim/UltiSnips"
-
-" Syntax highlight
-"Plugin 'tpope/vim-unimpaired'
-
 
 " " }}}
