@@ -19,6 +19,7 @@ Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
 "Plugin 'sjl/gundo.vim'
 Plugin 'bogado/file-line'
 Plugin 'vim-scripts/lastpos.vim'
@@ -64,9 +65,9 @@ set tags=.git/tags;$HOME       " consider the repo tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
 
-"set modeline
-"set modelines=5                " default numbers of lines to read for modeline
-                                " instructions
+set modeline
+set modelines=5                " default numbers of lines to read for modeline
+                               " instructions
 
 set autowrite                  " Writes on make/shell commands
 set autoread
@@ -97,15 +98,17 @@ set scrolloff=10
 
 "set formatoptions=tcrqnj  " Need testing!!!
 set formatoptions=cqnj
-set nowrap
+"set nowrap
 set whichwrap+=<,>,h,l
 
+set wrap
 "set textwidth=80                " Limit number of lines to 80
 "set colorcolumn=+1
 "hi ColorColumn ctermbg=236
 
 set tabstop=2                  " tab size eql 2 spaces
-"set softtabstop=2
+set softtabstop=2
+set shiftwidth=2                  " tab size eql 2 spaces
 set expandtab                  " replace tabs with ${tabstop} spaces
 
 set noshowmode                 " Don't show mode on bottom
@@ -133,8 +136,6 @@ endif
 
 colorscheme kogyblack
 
-"let g:molokai_original = 1
-"colorscheme molokai           " Colorscheme
 "hi Normal ctermbg=none        " Enables transparency on terminal
 
 "syntax on                     " enable syntax
@@ -202,6 +203,7 @@ vnoremap ' `
 nnoremap ` '
 vnoremap ` '
 
+nnoremap <leader>rs :source $MYVIMRC<CR>
 nnoremap <leader>re :edit $MYVIMRC<CR>
 
 " Tabs
@@ -308,12 +310,9 @@ vnoremap ,. <esc>
 
 " AutoCommands " {{{
 augroup vimrc_autocmds
-  "au BufRead,BufNewFile {*.go}                                          setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
-  au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-  au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         setl ft=markdown
-  "au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gitcommit noml list| norm 1G
-  "au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
-  au BufRead,BufNewFile {*.py,*.pyw}     setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
+  au BufRead,BufNewFile {*.md,*.mkd,*.markdown} setl ft=markdown
+  "au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG} setl ft=gitcommit noml list| norm 1G
+  au BufRead,BufNewFile {*.py,*.pyw} setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
 
   " open help in vertical split
   au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
@@ -344,44 +343,45 @@ nnoremap <leader>sh :FSSplitLeft<CR>
 " YouCompleteMe "
 """""""""""""""""
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-"let g:ycm_collect_identifiers_from_tag_files = 1
-"let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_collect_identifiers_from_tag_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
 "let g:ycm_confirm_extra_conf = 0
 "let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_register_as_syntastic_checker = 0
+
+let g:ycm_register_as_syntastic_checker = 0
+
+"let g:ycm_enable_diagnostic_signs = 1
+"let g:ycm_enable_diagnostic_highlighting = 0
+"let g:ycm_always_populate_location_list = 1 "default 0
+"let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
 
 """""""""""""
 " Syntastic "
 """""""""""""
-""let g:syntastic_check_on_open = 1
-"
-""set error or warning signs
-"let g:syntastic_error_symbol = '✗'
-"let g:syntastic_warning_symbol = '⚠'
-"
-""whether to show balloons
-""let g:syntastic_enable_balloons = 1
-""let g:syntastic_auto_loc_list = 1
-"
-""let g:syntastic_mode_map = { "mode": "passive" }
-"hi SpellBad ctermbg=black
-"hi SpellCap ctermbg=black
+let syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-" C++ Files
-"let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.8/',
-                                    "'/usr/include/wx-3.0/',
-                                    "'/usr/include/wx-3.0/wx/']
-"let g:syntastic_cpp_include_dirs = ['/usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0/', '/usr/include/wx-3.0/']
-"let g:syntastic_cpp_remove_include_errors = 1
-"let g:syntastic_cpp_check_header = 1
-"let g:syntastic_cpp_compiler = 'clang++'
-"let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++ `wx-config --cppflags` `wx-config --libs`'
+"set error and warning signs
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+
+"let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+
+"let g:syntastic_cpp_checkers = ['gcc']
+
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
+
+hi SpellBad ctermbg=red
+hi SpellCap ctermbg=black
 
 "let g:syntastic_python_checkers = ['flake8']
 "let g:syntastic_python_flake8_args = '--ignore=E501'
 
-" LaTeX Files
-"let g:syntastic_tex_checkers=['chktex.vim']
+map <silent> <leader>e :Errors<CR>
+map <silent> <leader>c :lclose<CR>
 
 """""""""""""""
 " Indent line "
