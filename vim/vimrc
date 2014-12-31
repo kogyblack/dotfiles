@@ -20,6 +20,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-dispatch'
 "Plugin 'sjl/gundo.vim'
 Plugin 'bogado/file-line'
 Plugin 'vim-scripts/lastpos.vim'
@@ -97,6 +98,7 @@ set scrolloff=10
 " Formatting "{{{
 
 "set formatoptions=tcrqnj  " Need testing!!!
+
 set formatoptions=cqnj
 "set nowrap
 set whichwrap+=<,>,h,l
@@ -330,11 +332,31 @@ augroup END
 
 " Scripts and Plugins Mappings " {{{
 
+""""""""""""
+" Dispatch "
+""""""""""""
+fun! SetMkfile()
+  let filemk = "Makefile"
+  let pathmk = "./"
+  let depth = 1
+  while depth < 4
+    if filereadable(pathmk . filemk)
+      return pathmk
+    endif
+    let depth += 1
+    let pathmk = "../" . pathmk
+  endwhile
+  return "."
+endf
+
+command! -nargs=* MakeParent let &makeprg = 'make ' . <q-args> . ' -C ' . SetMkfile() . ' --no-print-directory' | Make
+map <F9> :MakeParent rebuild<cr>
 
 """""""""""
 " FSwitch "
 """""""""""
-"nnoremap <leader>s  :FSHere<CR>
+
+" nnoremap <leader>s  :FSHere<CR>
 nnoremap <leader>sj :FSHere<CR>
 nnoremap <leader>sl :FSSplitRight<CR>
 nnoremap <leader>sh :FSSplitLeft<CR>
