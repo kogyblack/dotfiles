@@ -107,8 +107,8 @@ else \
   echo " '$Yellow$PathShort$Color_Off'\$ "; \
 fi)'
 
-#alias ls='ls -pX --color=always'
-#alias la='ls -pa --color=always'
+alias ls='ls -pX --color=always'
+alias la='ls -pa --color=always'
 alias ..='cd ..'
 alias j='jobs'
 
