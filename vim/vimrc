@@ -399,8 +399,8 @@ let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
 hi SpellBad ctermbg=red
 hi SpellCap ctermbg=black
 
-"let g:syntastic_python_checkers = ['flake8']
-"let g:syntastic_python_flake8_args = '--ignore=E501'
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore=E501'
 
 map <silent> <leader>e :Errors<CR>
 map <silent> <leader>c :lclose<CR>
@@ -452,15 +452,15 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 " UltiSnips "
 """""""""""""
 "" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-""let g:UltiSnipsExpandTrigger       = "<leader>s"
+"let g:UltiSnipsExpandTrigger       = "<leader>s"
 ""let g:UltiSnipsExpandTrigger       = "<tab>"
 ""let g:UltiSnipsListSnippets        = "<c-tab>"
 ""let g:UltiSnipsJumpForwardTrigger  = "<tab>"
 ""let g:UltiSnipsExpandTrigger       = "<leader>s"
-"let g:UltiSnipsExpandTrigger       = "<leader>\\"
+let g:UltiSnipsExpandTrigger       = "<leader>\\"
 ""let g:UltiSnipsListSnippets        = "<>"
-"let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-"let g:UltiSnipsSnippetsDir = $HOME . "/git/dotfiles/vim/UltiSnips"
+let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:UltiSnipsSnippetsDir = $HOME . "/git/dotfiles/vim/UltiSnips"
 
 " " }}}
