@@ -6,7 +6,7 @@
 filetype off
 runtime macros/matchit.vim
 set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+call vundle#begin()
 
 Plugin 'gmarik/vundle' " let Vundle manage Vundle
 Plugin 'FSwitch'
@@ -30,6 +30,8 @@ Plugin 'bling/vim-airline'
 Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
 
+Plugin 'kchmck/vim-coffee-script'
+
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'wincent/Command-T'
 
@@ -40,6 +42,7 @@ Plugin 'wincent/Command-T'
 "Plugin 'tomasr/molokai'
 Plugin 'kogyblack/vim-kogy-colorscheme'
 
+call vundle#end()
 filetype plugin indent on      " Automatically detect file types.
 
 " " }}}
@@ -230,7 +233,7 @@ vnoremap <silent> <Leader>p "+p
 
 " <Leader>{Y,y} to copy outside vim
 nnoremap <silent> <Leader>y "+y
-nnoremap <silent> <Leader>y "+y
+vnoremap <silent> <Leader>y "+y
 " recursive map, 'cause Y have a mapping
 nnoremap <silent> <Leader>Y "+Y
 
@@ -315,6 +318,7 @@ augroup vimrc_autocmds
   au BufRead,BufNewFile {*.md,*.mkd,*.markdown} setl ft=markdown
   "au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG} setl ft=gitcommit noml list| norm 1G
   au BufRead,BufNewFile {*.py,*.pyw} setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
+  au BufRead,BufNewFile {*.coffee} setl ft=coffee tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
 
   " open help in vertical split
   au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
@@ -326,6 +330,9 @@ augroup vimrc_autocmds
   " Highlight lines with more than 80 length
   autocmd BufEnter,BufWritePost * highlight OverLength ctermbg=236
   autocmd BufEnter,BufWritePost * match OverLength /\%81v./
+
+  "
+  autocmd BufEnter * set formatoptions=cqonj
 augroup END
 
 " " }}}
@@ -377,6 +384,9 @@ let g:ycm_register_as_syntastic_checker = 0
 "let g:ycm_enable_diagnostic_highlighting = 0
 "let g:ycm_always_populate_location_list = 1 "default 0
 "let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+
+"let g:ycm_server_use_vim_stdout = 1
+"let g:ycm_server_log_level = 'debug'
 
 """""""""""""
 " Syntastic "

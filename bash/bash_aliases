@@ -79,6 +79,7 @@ On_ICyan="\[\033[0;106m\]"    # Cyan
 On_IWhite="\[\033[0;107m\]"   # White
 
 # Various variables you might want for your PS1 prompt instead
+Time24h="\t"
 Time12h="\T"
 Time12a="\@"
 PathShort="\w"
@@ -92,7 +93,7 @@ Jobs="\j"
 
 #export PS1="$Black$Time12h $Yellow$PathShort$Color_Off\$ "
 #export PS1=$BYellow$Time12h$Color_Off'$(git branch &>/dev/null;\
-export PS1=$Black$Time12h$Color_Off'$(git branch &>/dev/null;\
+export PS1=$Black$Time24h$Color_Off'$(git branch &>/dev/null;\
 if [ $? -eq 0 ]; then \
   echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
   if [ "$?" -eq "0" ]; then \
