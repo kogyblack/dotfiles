@@ -3,17 +3,11 @@
 # get the dir of the current script
 script_dir="$( cd "$( dirname "$0" )" && pwd )"
 
-# profile
-if [[ ! -a ~/.profile ]]
-then
-  ln -s $script_dir/profile ~/.profile
-fi
-
 # bash
-if [[ ! -a ~/.bash_aliases ]]
-then
-  ln -s $script_dir/bash/bash_aliases ~/.bash_aliases
-fi
+#if [[ ! -a ~/.bash_aliases ]]
+#then
+#  ln -s $script_dir/bash/bash_aliases ~/.bash_aliases
+#fi
 
 if [[ ! -a ~/.inputrc ]]
 then
@@ -49,13 +43,5 @@ if [[ ! -a ~/.gdbinit ]]
 then
   ln -s $script_dir/gdb/gdbinit ~/.gdbinit
 fi
-
-# vim plugins
-# YouCompleteMe
-#if [[ ! -a ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py ]]
-#then
-#  mkdir -p ~/.vim/bundle/YouCompleteMe/cpp/ycm
-#  ln -s $script_dir/vim/YouCompleteMe/ycm_extra_conf.py ~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py
-#fi
 
 source $script_dir/gitconfig_setup.sh
