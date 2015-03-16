@@ -12,6 +12,7 @@
     foreground_color = "#ffffff"
     show_titlebar = False
     font = DejaVu Sans Mono 10
+    scrollback_infinite = True
 [layouts]
   [[default]]
     [[[child1]]]
