@@ -59,12 +59,12 @@ scriptencoding utf-8           " utf-8 all the way
 set encoding=utf-8
 
 set history=256                " Number of things to remember in history.
-set timeoutlen=250             " Time to wait after ESC (default causes an
+set timeoutlen=200             " Time to wait after ESC (default causes an
                                " annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
 set pastetoggle=<F10>          " toggle between paste and normal: for 'safer'
                                " pasting from keyboard
-set shiftround                 " round indent to multiple of 'shiftwidth'
+"set shiftround                 " round indent to multiple of 'shiftwidth'
 set tags=.git/tags;$HOME       " consider the repo tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
@@ -122,8 +122,8 @@ set backspace=indent,eol,start
 
 set autoindent
 set cindent
-set indentkeys-=0#            " do not break indent on #
-set cinkeys-=0#
+"set indentkeys-=0#            " do not break indent on #
+"set cinkeys-=0#
 set cinkeys+=0=break
 set cinoptions=:s,cs
 set cinoptions+=b1,g0,N-s,t0,(0,W4
@@ -145,7 +145,7 @@ colorscheme kogyblack
 
 "syntax on                     " enable syntax
 
-set mouse=a                   " enable mouse in GUI mode
+"set mouse=a                   " enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
 
 set number
@@ -375,8 +375,8 @@ nnoremap <leader>sh :FSSplitLeft<CR>
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 let g:ycm_register_as_syntastic_checker = 0
 
