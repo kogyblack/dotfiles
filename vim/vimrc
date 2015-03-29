@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'gmarik/vundle' " let Vundle manage Vundle
 Plugin 'FSwitch'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'tikhomirov/vim-glsl'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'timcharper/textile.vim'
