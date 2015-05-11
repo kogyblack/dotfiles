@@ -15,25 +15,32 @@ Plugin 'tikhomirov/vim-glsl'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
 Plugin 'timcharper/textile.vim'
-"Plugin 'gmarik/vim-markdown'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'gmarik/vim-markdown'
+
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-dispatch'
+
 "Plugin 'sjl/gundo.vim'
 Plugin 'bogado/file-line'
 Plugin 'vim-scripts/lastpos.vim'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'Lokaltog/vim-easymotion'
+
 Plugin 'bling/vim-airline'
+
 Plugin 'SirVer/ultisnips'
 "Plugin 'honza/vim-snippets'
 
-Plugin 'kchmck/vim-coffee-script'
+Plugin 'OmniSharp/omnisharp-vim'
 
 "Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'scrooloose/nerdtree'
 Plugin 'wincent/Command-T'
 
 "Plugin 'xolox/vim-misc'
@@ -102,8 +109,8 @@ set scrolloff=10
 " Formatting "{{{
 
 "set formatoptions=tcrqnj  " Need testing!!!
+"set formatoptions=cqnj    " See autocmd
 
-set formatoptions=cqnj
 "set nowrap
 set whichwrap+=<,>,h,l
 
@@ -136,9 +143,9 @@ set cinwords+=for,switch,case
 
 set t_Co=256 " set 256 colors on vim
 
-if &term =~ '256color'
-  set t_ut=
-endif
+"if &term =~ '256color'
+"  set t_ut=
+"endif
 
 colorscheme kogyblack
 
@@ -204,10 +211,10 @@ vnoremap ; :
 "vnoremap : ;
 
 " Swap ` and '
-nnoremap ' `
-vnoremap ' `
-nnoremap ` '
-vnoremap ` '
+"nnoremap ' `
+"vnoremap ' `
+"nnoremap ` '
+"vnoremap ` '
 
 nnoremap <leader>rs :source $MYVIMRC<CR>
 nnoremap <leader>re :edit $MYVIMRC<CR>
@@ -235,8 +242,11 @@ vnoremap <silent> <Leader>p "+p
 " <Leader>{Y,y} to copy outside vim
 nnoremap <silent> <Leader>y "+y
 vnoremap <silent> <Leader>y "+y
-" recursive map, 'cause Y have a mapping
-nnoremap <silent> <Leader>Y "+Y
+" recursive, 'cause Y is mapped
+nmap <silent> <Leader>Y "+Y
+
+" Maps 'Y' to yank to the end of the line
+nnoremap Y y$
 
 " Make Control-direction switch between windows (like C-W h, etc)
 nnoremap <leader>h <c-w>h
@@ -301,13 +311,10 @@ vnoremap > >gv
 nnoremap L $
 nnoremap H ^
 
-" Maps 'Y' to yank to the end of the line
-nnoremap Y y$
-
 " Adds quick quit
 nnoremap <leader>q :q<cr>
 
-" Adds quick quit insert mode
+" Adds quick esc
 nnoremap ,. <esc>
 inoremap ,. <esc>
 vnoremap ,. <esc>
@@ -320,6 +327,7 @@ augroup vimrc_autocmds
   "au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG} setl ft=gitcommit noml list| norm 1G
   au BufRead,BufNewFile {*.py,*.pyw} setl ft=python tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
   au BufRead,BufNewFile {*.coffee} setl ft=coffee tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
+  au BufRead,BufNewFile {*.cs} setl tabstop=4 softtabstop=4 shiftwidth=4 expandtab cinoptions+=N0
 
   " open help in vertical split
   au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
@@ -332,13 +340,28 @@ augroup vimrc_autocmds
   autocmd BufEnter,BufWritePost * highlight OverLength ctermbg=236
   autocmd BufEnter,BufWritePost * match OverLength /\%81v./
 
-  "
+  " Some formats doesn't set fo properly, so we need this autocmd
   autocmd BufEnter * set formatoptions=cqonj
+
+  " Remove trailing whitespaces on specific types
+  autocmd FileType c,cpp,cs,java,php,python autocmd BufWritePre <buffer> :call StripTrailingWhitespaces()
 augroup END
 
 " " }}}
 
 " Scripts and Plugins Mappings " {{{
+
+" Remove trailing mantaining cursor position
+fun! StripTrailingWhitespaces()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    "normal Hmz
+    %s/\s\+$//e
+    "normal 'yz<CR>
+    normal `z
+  endif
+endfunction
+
 
 """"""""""""
 " Dispatch "
@@ -372,7 +395,9 @@ nnoremap <leader>sh :FSSplitLeft<CR>
 """""""""""""""""
 " YouCompleteMe "
 """""""""""""""""
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/ycm_extra_conf.py'
+
+"""""""""""""""
 let g:ycm_collect_identifiers_from_tag_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 
@@ -380,6 +405,7 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 
 let g:ycm_register_as_syntastic_checker = 0
+"""""""""""""""
 
 "let g:ycm_enable_diagnostic_signs = 1
 "let g:ycm_enable_diagnostic_highlighting = 0
@@ -419,7 +445,14 @@ map <silent> <leader>c :lclose<CR>
 """""""""""""""
 " Indent line "
 """""""""""""""
-let g:indentLine_color_term = 0
+let g:indentLine_color_term = 239
+"let g:indentLine_char = '︙'
+let g:indentLine_char = '┊'
+let g:indentLine_enabled = 1
+
+"if !exists("g:syntax_on")
+"  syntax enable
+"endif
 
 """""""""
 " Gundo "
@@ -445,8 +478,7 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 """""""""""
 " Airline "
 """""""""""
-"let g:airline_powerline_fonts = 1
-
+let g:airline_powerline_fonts = 1
 
 """""""""""
 " Session "
