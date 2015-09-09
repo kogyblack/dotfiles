@@ -1,0 +1,338 @@
+if !exists('g:vimrc_initialized')
+  let g:is_windows = has('win32') || has('win64')
+
+  if empty($MYVIMRC)
+    let $MYVIMRC = substitute($VIMINIT, "^source ", "", "g")
+  endif
+
+  let g:rc_dir = strpart($MYVIMRC, 0, strridx($MYVIMRC, (g:is_windows ? '\' : '/')))
+  let $RCDIR = g:rc_dir
+  let g:plugins_dir = g:rc_dir.'/plugged'
+  let g:vim_plug_dir = g:plugins_dir.'/vim-plug'
+  "let &runtimepath = g:rc_dir.','.g:vim_plug_dir.','.$VIMRUNTIME
+  let g:vimrc_initialized = 1
+endif
+
+" Plugins " {{{
+
+" Install vim-plug if not available {{{
+"if !isdirectory(g:vim_plug_dir)
+"  call mkdir(g:vim_plug_dir, 'p')
+"endif
+"if !isdirectory(g:vim_plug_dir.'/autoload')
+"  execute '!git clone git://github.com/junegunn/vim-plug '
+"        \ shellescape(g:vim_plug_dir.'/autoload', 1)
+"endif
+
+" Load vim-plug
+if empty(glob("~/.vim/autoload/plug.vim"))
+    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+          \ https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+"call plug#begin()
+call plug#begin('~/.vim/plugged')
+
+" Colorscheme
+Plug 'kogyblack/vim-kogy-colorscheme'
+
+" General
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'Shougo/vinarise'
+Plug 'Yggdroot/indentLine' ", {'on': 'IndentLinesEnable'}
+Plug 'bling/vim-airline'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'benekastah/neomake'
+Plug 'floobits/floobits-neovim'
+
+" Motion
+Plug 'vim-scripts/lastpos.vim'
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'Lokaltog/vim-easymotion'
+
+" Language specific
+Plug 'pangloss/vim-javascript'
+Plug 'Valloric/python-indent'
+
+Plug 'FSwitch', { 'for': ['c', 'cpp'] }
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+Plug 'plasticboy/vim-markdown'
+Plug 'digitaltoad/vim-jade'
+Plug 'kchmck/vim-coffee-script'
+Plug 'wavded/vim-stylus'
+
+
+call plug#end()
+
+" " }}}
+
+" General "{{{
+
+syntax enable
+
+set history=500                " Number of things to remember in history.
+set timeoutlen=200              " 
+"set timeoutlen=3000            " 
+set ttimeoutlen=10             " 
+set clipboard+=unnamed         " Yanks go on clipboard instead.
+
+set autoread
+
+set nobackup
+set nowritebackup
+set noswapfile
+
+set ignorecase                 " be case insensitive when searching
+set smartcase                  " be case sensitive when input has a capital
+                               " letter
+
+let mapleader = ','
+let maplocalleader = '	'      " Tab as a local leader
+
+set lazyredraw
+set scrolloff=10
+
+set mouse=
+
+set modeline
+
+" " }}}
+
+" Formating "{{{
+
+set textwidth=80
+
+set wrap
+set whichwrap+=<,>,h,l
+
+set tabstop=2                  " tab size eql 2 spaces
+set softtabstop=2
+set shiftwidth=2                  " tab size eql 2 spaces
+set expandtab                  " replace tabs with ${tabstop} spaces
+
+set noshowmode                 " Don't show mode on bottom
+
+set foldmethod=indent
+set nofoldenable
+
+"set cindent
+"set indentkeys-=0#            " do not break indent on #
+"set cinkeys-=0#
+"set cinkeys+=0=break
+"set cinoptions=:s,cs
+"set cinoptions+=b1,g0,N-s,t0,(0,W4
+"set cinwords=if,else,while,do
+"set cinwords+=for,switch,case
+
+" " }}}
+
+" Visual "{{{
+
+colorscheme kogyblack
+
+set number
+
+set cursorline                " Current line adornment
+
+set showcmd                   " display an incomplete command in statusline
+
+set showmatch                 " Show matching brackets.
+set matchtime=2
+
+set splitbelow
+set splitright
+
+set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
+set showbreak=↪
+set breakindent breakindentopt=sbr
+
+" " }}}
+
+" Key mappings " {{{
+
+nnoremap ; :
+vnoremap ; ;
+
+nnoremap <silent> ,. :noh<cr>
+vnoremap ,. <esc>
+inoremap ,. <esc>
+
+" split line (opposite to <s-j> joining line)
+nnoremap <s-k> i<CR><ESC>
+
+" fast scrolling
+noremap <silent> <c-j> 15gj
+noremap <silent> <c-k> 15gk
+
+" switch between windows (like <c-w> h, etc)
+nnoremap <leader>h <c-w>h
+nnoremap <leader>j <c-w>j
+nnoremap <leader>k <c-w>k
+nnoremap <leader>l <c-w>l
+
+" execute current line or selection
+nnoremap <silent> <leader>t "ryy:@r<cr>
+vnoremap <silent> <leader>t "rygy:@r<cr>
+
+" toggle spell on/off
+nnoremap <silent> <leader>s :set spell!<cr>
+
+" edit vimrc
+nnoremap <leader>e :e $MYVIMRC<cr>
+nnoremap <leader>r :source $MYVIMRC<cr>
+
+" search/replace the word under the cursor
+nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
+
+" move text up/down
+nnoremap <silent> <m-j> :m .+1<cr>==
+nnoremap <silent> <m-k> :m .-2<cr>==
+vnoremap <silent> <m-j> :m '>+1<cr>gv=gv
+vnoremap <silent> <m-k> :m '<-2<cr>gv=gv
+
+" " }}}
+
+" AutoCommands " {{{
+augroup vimrc_autocmds
+  au FileType python setl tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+  "au FileType coffee setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
+  au FileType jade setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
+  au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
+  au BufRead,BufNewFile {*.md} setl ft=markdown textwidth=80
+
+  " PICO-8
+  au BufRead {*.p8} setl ft=lua tabstop=1 softtabstop=1 shiftwidth=1 expandtab
+
+  " open help in vertical split
+  au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
+
+  " Update Airline
+  "autocmd! BufWritePost .vimrc,_vimrc,vimrc
+  "        \ source $MYVIMRC | AirlineRefresh
+
+  " Highlight lines with more than 80 length
+  "autocmd BufEnter,BufWritePost * highlight OverLength ctermbg=236
+  "autocmd BufEnter,BufWritePost * match OverLength /\%81v./
+
+  " Some formats doesn't set fo properly, so we need this autocmd
+  "autocmd BufEnter * set formatoptions=cqonj
+
+  " Remove trailing whitespaces on specific types
+  autocmd FileType c,cpp,cs,java,php,python autocmd BufWritePre <buffer> :call StripTrailingWhitespaces()
+augroup END
+
+" " }}}
+
+" Scripts and Plugins Mappings " {{{
+
+" Remove trailing mantaining cursor position
+"fun! StripTrailingWhitespaces()
+"  if !&binary && &filetype != 'diff'
+"    normal mz
+"    "normal Hmz
+"    %s/\s\+$//e
+"    "normal 'yz<CR>
+"    normal `z
+"  endif
+"endfunction
+
+" Fugitive {{{
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gw :Gwrite
+nnoremap <leader>gr :Gread
+nnoremap <leader>dp :diffput<cr>:diffupdate<cr>
+vnoremap <leader>dp :diffput<cr>:diffupdate<cr>
+nnoremap <leader>dg :diffget<cr>:diffupdate<cr>
+vnoremap <leader>dg :diffget<cr>:diffupdate<cr>
+" }}}
+
+" UndoTree {{{
+nnoremap <leader>u :UndotreeToggle<cr>
+" }}}
+
+" YouCompleteMe {{{
+
+let g:ycm_auto_trigger = 1
+
+" }}}
+
+" NeoMake {{{
+
+let g:neomake_verbose = 0
+augroup Neomake
+  au!
+  au! BufWritePost * Neomake
+augroup END
+
+" }}}
+
+" Indent line {{{
+let g:indentLine_enabled = 1
+let g:indentLine_color_term = 235
+let g:indentLine_char = '│'
+
+" }}}
+
+" Easy Align {{{
+vmap <Enter>          <Plug>(EasyAlign)
+vmap <Leader><Enter>  <Plug>(LiveEasyAlign)
+" }}}
+
+" Easy Motion {{{
+let g:EasyMotion_leader_key='<localleader>'
+nmap <LocalLeader>h <Plug>(easymotion-linebackward)
+nmap <LocalLeader>j <Plug>(easymotion-j)
+nmap <LocalLeader>k <Plug>(easymotion-k)
+nmap <LocalLeader>l <Plug>(easymotion-lineforward)
+" }}}
+
+" Airline {{{
+let g:airline_powerline_fonts = 1
+" }}}
+
+" FSwitch {{{
+" nnoremap <leader>s  :FSHere<CR>
+nnoremap <leader>sj :FSHere<CR>
+nnoremap <leader>sl :FSSplitRight<CR>
+nnoremap <leader>sh :FSSplitLeft<CR>
+" }}}
+
+" NERDTree {{{
+map <localleader>n :NERDTreeToggle<cr><c-w>=
+" }}}
+
+" Snippets {{{
+"if g:has_python
+  let g:UltiSnipsEditSplit = 'normal'
+  let g:UltiSnipsSnippetsDir = '~/nvim/UltiSnips'
+  "let g:UltiSnipsSnippetsDir = g:rc_dir . '/UltiSnips'
+  let g:UltiSnipsExpandTrigger = "<c-s>"
+"endif
+" }}}
+
+" FZF {{{
+if has('nvim')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
+
+nnoremap <silent> <leader><leader> :Files<cr>
+nnoremap <silent> <leader>b :Buffers<cr>
+
+" " }}}

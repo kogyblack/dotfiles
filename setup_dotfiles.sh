@@ -17,7 +17,13 @@ fi
 # vim
 if [[ ! -a ~/.vimrc ]]
 then
-  ln -s $script_dir/vim/vimrc ~/.vimrc
+  ln -s $script_dir/vim/nvimrc ~/.vimrc
+fi
+
+# nvim
+if [[ ! -a ~/.vimrc ]]
+then
+  ln -s $script_dir/vim/nvimrc ~/.nvimrc
 fi
 
 # terminator
