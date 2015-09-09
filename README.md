@@ -1,1 +1,1 @@
-Some of kogyblack's dotfiles
+Some of naumazeredo's dotfiles
