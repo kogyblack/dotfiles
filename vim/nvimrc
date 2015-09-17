@@ -50,14 +50,14 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'benekastah/neomake'
-Plug 'floobits/floobits-neovim'
+"Plug 'benekastah/neomake'
+"Plug 'floobits/floobits-neovim'
 
 " Motion
 Plug 'vim-scripts/lastpos.vim'
@@ -159,14 +159,14 @@ set splitright
 
 set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
 set showbreak=↪
-set breakindent breakindentopt=sbr
+"set breakindent breakindentopt=sbr
 
 " " }}}
 
 " Key mappings " {{{
 
 nnoremap ; :
-vnoremap ; ;
+vnoremap ; :
 
 nnoremap <silent> ,. :noh<cr>
 vnoremap ,. <esc>
@@ -213,7 +213,6 @@ augroup vimrc_autocmds
   "au FileType coffee setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType jade setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
-  au BufRead,BufNewFile {*.md} setl ft=markdown textwidth=80
 
   " PICO-8
   au BufRead {*.p8} setl ft=lua tabstop=1 softtabstop=1 shiftwidth=1 expandtab
@@ -233,7 +232,7 @@ augroup vimrc_autocmds
   "autocmd BufEnter * set formatoptions=cqonj
 
   " Remove trailing whitespaces on specific types
-  autocmd FileType c,cpp,cs,java,php,python autocmd BufWritePre <buffer> :call StripTrailingWhitespaces()
+  "autocmd FileType c,cpp,cs,java,php,python autocmd BufWritePre <buffer> :call StripTrailingWhitespaces()
 augroup END
 
 " " }}}
@@ -269,17 +268,15 @@ nnoremap <leader>u :UndotreeToggle<cr>
 
 " YouCompleteMe {{{
 
-let g:ycm_auto_trigger = 1
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 
 " }}}
 
 " NeoMake {{{
 
-let g:neomake_verbose = 0
-augroup Neomake
-  au!
-  au! BufWritePost * Neomake
-augroup END
+"let g:neomake_verbose = 0
+"au! BufWritePost * Neomake
 
 " }}}
 
