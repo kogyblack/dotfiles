@@ -34,7 +34,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Colorscheme
-Plug 'kogyblack/vim-kogy-colorscheme'
+Plug 'naumazeredo/vim-kogy-colorscheme'
 
 " General
 Plug 'tpope/vim-fugitive'
@@ -50,7 +50,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp', 'h', 'hpp'] }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -75,6 +75,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade'
 Plug 'kchmck/vim-coffee-script'
 Plug 'wavded/vim-stylus'
+Plug 'mattn/emmet-vim' ", { 'on': 'html' }
 
 
 call plug#end()
@@ -115,9 +116,11 @@ set modeline
 
 " Formating "{{{
 
-set textwidth=80
+"set textwidth=80
+set textwidth=0
 
-set wrap
+"set wrap
+set nowrap
 set whichwrap+=<,>,h,l
 
 set tabstop=2                  " tab size eql 2 spaces
@@ -131,13 +134,13 @@ set foldmethod=indent
 set nofoldenable
 
 "set cindent
-"set indentkeys-=0#            " do not break indent on #
-"set cinkeys-=0#
-"set cinkeys+=0=break
-"set cinoptions=:s,cs
-"set cinoptions+=b1,g0,N-s,t0,(0,W4
-"set cinwords=if,else,while,do
-"set cinwords+=for,switch,case
+set indentkeys-=0#            " do not break indent on #
+set cinkeys-=0#
+set cinkeys+=0=break
+set cinoptions=:s,cs
+set cinoptions+=b1,g0,N-s,t0,(0,W4
+set cinwords=if,else,while,do
+set cinwords+=for,switch,case
 
 " " }}}
 
@@ -185,6 +188,9 @@ nnoremap <leader>j <c-w>j
 nnoremap <leader>k <c-w>k
 nnoremap <leader>l <c-w>l
 
+nnoremap H g^
+nnoremap L g$
+
 " execute current line or selection
 nnoremap <silent> <leader>t "ryy:@r<cr>
 vnoremap <silent> <leader>t "rygy:@r<cr>
@@ -200,10 +206,10 @@ nnoremap <leader>r :source $MYVIMRC<cr>
 nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
 
 " move text up/down
-nnoremap <silent> <m-j> :m .+1<cr>==
-nnoremap <silent> <m-k> :m .-2<cr>==
-vnoremap <silent> <m-j> :m '>+1<cr>gv=gv
-vnoremap <silent> <m-k> :m '<-2<cr>gv=gv
+"nnoremap <silent> <m-j> :m .+1<cr>==
+"nnoremap <silent> <m-k> :m .-2<cr>==
+"vnoremap <silent> <m-j> :m '>+1<cr>gv=gv
+"vnoremap <silent> <m-k> :m '<-2<cr>gv=gv
 
 " " }}}
 
@@ -213,6 +219,9 @@ augroup vimrc_autocmds
   "au FileType coffee setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType jade setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
+  au FileType c,cpp setl cindent
+  au FileType javascript setl tabstop=4 softtabstop=4 shiftwidth=4
+  au FileType html setl tabstop=4 softtabstop=4 shiftwidth=4 nowrap tw=0
 
   " PICO-8
   au BufRead {*.p8} setl ft=lua tabstop=1 softtabstop=1 shiftwidth=1 expandtab
@@ -229,7 +238,7 @@ augroup vimrc_autocmds
   "autocmd BufEnter,BufWritePost * match OverLength /\%81v./
 
   " Some formats doesn't set fo properly, so we need this autocmd
-  "autocmd BufEnter * set formatoptions=cqonj
+  autocmd FileType * setlocal formatoptions-=cro
 
   " Remove trailing whitespaces on specific types
   "autocmd FileType c,cpp,cs,java,php,python autocmd BufWritePre <buffer> :call StripTrailingWhitespaces()
@@ -269,7 +278,8 @@ nnoremap <leader>u :UndotreeToggle<cr>
 " YouCompleteMe {{{
 
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+au FileType cpp let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_cpp_extra_conf.py'
+au FileType c let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_c_extra_conf.py'
 
 " }}}
 
@@ -304,6 +314,10 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 let g:airline_powerline_fonts = 1
 " }}}
 
+" Fugitive {{{
+set diffopt+=vertical
+" }}}
+
 " FSwitch {{{
 " nnoremap <leader>s  :FSHere<CR>
 nnoremap <leader>sj :FSHere<CR>
@@ -331,5 +345,10 @@ endif
 
 nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader>b :Buffers<cr>
+" }}}
+
+" Emmet {{{
+let g:user_emmet_leader_key='<c-f>'
+" }}}
 
 " " }}}
