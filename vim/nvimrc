@@ -1,40 +1,38 @@
 if !exists('g:vimrc_initialized')
   let g:is_windows = has('win32') || has('win64')
-
   if empty($MYVIMRC)
     let $MYVIMRC = substitute($VIMINIT, "^source ", "", "g")
   endif
-
   let g:rc_dir = strpart($MYVIMRC, 0, strridx($MYVIMRC, (g:is_windows ? '\' : '/')))
   let $RCDIR = g:rc_dir
   let g:plugins_dir = g:rc_dir.'/plugged'
   let g:vim_plug_dir = g:plugins_dir.'/vim-plug'
-  "let &runtimepath = g:rc_dir.','.g:vim_plug_dir.','.$VIMRUNTIME
+  let &runtimepath = g:rc_dir.','.g:vim_plug_dir.','.$VIMRUNTIME
   let g:vimrc_initialized = 1
 endif
 
 " Plugins " {{{
 
 " Install vim-plug if not available {{{
-"if !isdirectory(g:vim_plug_dir)
-"  call mkdir(g:vim_plug_dir, 'p')
-"endif
-"if !isdirectory(g:vim_plug_dir.'/autoload')
-"  execute '!git clone git://github.com/junegunn/vim-plug '
-"        \ shellescape(g:vim_plug_dir.'/autoload', 1)
-"endif
-
-" Load vim-plug
-if empty(glob("~/.vim/autoload/plug.vim"))
-    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-          \ https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+if !isdirectory(g:vim_plug_dir)
+  call mkdir(g:vim_plug_dir, 'p')
+endif
+if !isdirectory(g:vim_plug_dir.'/autoload')
+  execute '!git clone git://github.com/junegunn/vim-plug '
+        \ shellescape(g:vim_plug_dir.'/autoload', 1)
 endif
 
+" Load vim-plug
+"if empty(glob("~/.vim/autoload/plug.vim"))
+"    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"          \ https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+"endif
+
 "call plug#begin()
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 " Colorscheme
-Plug 'naumazeredo/vim-kogy-colorscheme'
+Plug 'kogyblack/vim-kogy-colorscheme'
 
 " General
 Plug 'tpope/vim-fugitive'
@@ -50,7 +48,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp', 'h', 'hpp'] }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp', 'h', 'hpp'] }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
@@ -73,7 +71,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade'
-Plug 'kchmck/vim-coffee-script'
+"Plug 'kchmck/vim-coffee-script'
 Plug 'wavded/vim-stylus'
 Plug 'mattn/emmet-vim' ", { 'on': 'html' }
 
@@ -108,6 +106,7 @@ let maplocalleader = '	'      " Tab as a local leader
 set lazyredraw
 set scrolloff=10
 
+"set mouse=a
 set mouse=
 
 set modeline
@@ -138,13 +137,16 @@ set indentkeys-=0#            " do not break indent on #
 set cinkeys-=0#
 set cinkeys+=0=break
 set cinoptions=:s,cs
-set cinoptions+=b1,g0,N-s,t0,(0,W4
+set cinoptions+=b1,g0,N-s,t0,(0,Ws
+set cinoptions+=i2s,m1
 set cinwords=if,else,while,do
 set cinwords+=for,switch,case
 
 " " }}}
 
 " Visual "{{{
+
+"set t_Co=256
 
 colorscheme kogyblack
 
@@ -221,7 +223,8 @@ augroup vimrc_autocmds
   au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
   au FileType c,cpp setl cindent
   au FileType javascript setl tabstop=4 softtabstop=4 shiftwidth=4
-  au FileType html setl tabstop=4 softtabstop=4 shiftwidth=4 nowrap tw=0
+  "au FileType html setl tabstop=4 softtabstop=4 shiftwidth=4 nowrap tw=0
+  au FileType html setl tabstop=2 softtabstop=2 shiftwidth=2 nowrap tw=0
 
   " PICO-8
   au BufRead {*.p8} setl ft=lua tabstop=1 softtabstop=1 shiftwidth=1 expandtab

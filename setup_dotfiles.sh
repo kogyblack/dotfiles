@@ -11,19 +11,22 @@ script_dir="$( cd "$( dirname "$0" )" && pwd )"
 
 if [[ ! -a ~/.inputrc ]]
 then
-  ln -s $script_dir/bash/inputrc ~/.inputrc
+  ln -s $script_dir/bash/inputrc HOME/.inputrc
 fi
 
 # vim
 if [[ ! -a ~/.vimrc ]]
 then
-  ln -s $script_dir/vim/nvimrc ~/.vimrc
+  mkdir -p $HOME/.vim
+  ln -s $script_dir/vim/nvimrc $HOME/.vimrc
 fi
 
 # nvim
-if [[ ! -a ~/.vimrc ]]
+XDG_CONFIG_HOME:=$HOME/.config
+if [[ ! -a $XDG_CONFIG_HOME/nvim/init.vim ]]
 then
-  ln -s $script_dir/vim/nvimrc ~/.nvimrc
+  ln -s ~/.vim $XDG_CONFIG_HOME/nvim
+  ln -s $script_dir/vim/nvimrc $XDG_CONFIG_HOME/nvim/init.vim
 fi
 
 # terminator

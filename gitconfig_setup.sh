@@ -10,7 +10,7 @@ then
   git config --global user.email "naumazeredo@gmail.com"
 fi
 
-git config --global github.user kogyblack
+git config --global github.user naumazeredo
 
 # aliases
 git config --global alias.st status
