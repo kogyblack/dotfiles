@@ -32,7 +32,7 @@ endif
 call plug#begin()
 
 " Colorscheme
-Plug 'kogyblack/vim-kogy-colorscheme'
+Plug 'naumazeredo/vim-kogy-colorscheme'
 
 " General
 Plug 'tpope/vim-fugitive'
@@ -49,7 +49,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp', 'h', 'hpp'] }
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+"Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/fzf.vim'
@@ -217,12 +217,13 @@ nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>h
 
 " AutoCommands " {{{
 augroup vimrc_autocmds
+  au Filetype markdown setl tw=80 wrap
   au FileType python setl tabstop=4 softtabstop=4 shiftwidth=4 expandtab
   "au FileType coffee setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType jade setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
   au FileType c,cpp setl cindent
-  au FileType javascript setl tabstop=4 softtabstop=4 shiftwidth=4
+  au FileType javascript setl tabstop=2 softtabstop=2 shiftwidth=2
   "au FileType html setl tabstop=4 softtabstop=4 shiftwidth=4 nowrap tw=0
   au FileType html setl tabstop=2 softtabstop=2 shiftwidth=2 nowrap tw=0
 
