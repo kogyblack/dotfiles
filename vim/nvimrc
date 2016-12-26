@@ -166,6 +166,8 @@ set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
 set showbreak=↪
 "set breakindent breakindentopt=sbr
 
+set conceallevel=0
+
 " " }}}
 
 " Key mappings " {{{
@@ -353,6 +355,10 @@ nnoremap <silent> <leader>b :Buffers<cr>
 
 " Emmet {{{
 let g:user_emmet_leader_key='<c-f>'
+" }}}
+
+" Markdown {{{
+let g:vim_markdown_conceal = 0
 " }}}
 
 " " }}}
