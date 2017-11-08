@@ -1,28 +1,21 @@
 #!/bin/bash
 
+echo "~ kogyblack configuration setup ~"
+
 # get the dir of the current script
 script_dir="$( cd "$( dirname "$0" )" && pwd )"
 
-# bash
-#if [[ ! -a ~/.bash_aliases ]]
-#then
-#  ln -s $script_dir/bash/bash_aliases ~/.bash_aliases
-#fi
-
-if [[ ! -a ~/.inputrc ]]
-then
-  ln -s $script_dir/bash/inputrc $HOME/.inputrc
-fi
+echo "Configuring vim..."
 
 # vim
 if [[ ! -a ~/.vimrc ]]
 then
-  mkdir -p $HOME/.vim
-  ln -s $script_dir/vim/nvimrc $HOME/.vimrc
+  mkdir -p ~/.vim
+  ln -s $script_dir/vim/nvimrc ~/.vimrc
 fi
 
 # nvim
-XDG_CONFIG_HOME=$HOME/.config
+XDG_CONFIG_HOME=~/.config
 mkdir -p $XDG_CONFIG_HOME/nvim
 if [[ ! -a $XDG_CONFIG_HOME/nvim/init.vim ]]
 then
@@ -30,12 +23,7 @@ then
   ln -s $script_dir/vim/nvimrc $XDG_CONFIG_HOME/nvim/init.vim
 fi
 
-# terminator
-if [[ ! -a ~/.config/terminator/config ]]
-then
-  mkdir -p ~/.config/terminator
-  ln -s $script_dir/terminator/config ~/.config/terminator/config
-fi
+echo "Configuring tmux..."
 
 # tmux
 if [[ ! -a ~/.tmux.conf ]]
@@ -48,10 +36,16 @@ then
   ln -s $script_dir/tmux/tmux.conf.local ~/.tmux.conf.local
 fi
 
-# gdb
-if [[ ! -a ~/.gdbinit ]]
+echo "Configuring gdb (peda)..."
+
+if [[ ! -a ~/peda ]]
 then
-  ln -s $script_dir/gdb/gdbinit ~/.gdbinit
-fi
+  git clone https://github.com/longld/peda.git ~/.peda
+  echo "source ~/.peda/peda.py" >> ~/.gdbinit
+if
+
+echo "Configuring git..."
 
 source $script_dir/gitconfig_setup.sh
+
+echo "Configuration complete!"
