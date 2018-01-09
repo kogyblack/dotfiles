@@ -12,6 +12,8 @@ fi
 
 git config --global github.user naumazeredo
 
+git config --global core.editor "vim"
+
 # aliases
 git config --global alias.st status
 git config --global alias.co checkout

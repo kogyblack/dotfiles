@@ -38,14 +38,15 @@ fi
 
 echo "Configuring gdb (peda)..."
 
-if [[ ! -a ~/peda ]]
+if [[ ! -a ~/.peda ]]
 then
   git clone https://github.com/longld/peda.git ~/.peda
   echo "source ~/.peda/peda.py" >> ~/.gdbinit
-if
+fi
 
 echo "Configuring git..."
 
 source $script_dir/gitconfig_setup.sh
 
 echo "Configuration complete!"
+

@@ -30,6 +30,8 @@ endif
 
 call plug#begin()
 
+Plug 'junegunn/vim-plug'
+
 " Colorscheme
 Plug 'naumazeredo/vim-kogy-colorscheme'
 
@@ -65,8 +67,8 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'pangloss/vim-javascript'
 Plug 'Valloric/python-indent'
 
-Plug 'FSwitch', { 'for': ['c', 'cpp'] }
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp'] }
+"Plug 'octol/vim-cpp-enhanced-highlight'
 
 Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade'
@@ -80,6 +82,8 @@ call plug#end()
 " " }}}
 
 " General "{{{
+
+set encoding=utf-8
 
 syntax enable
 
@@ -316,7 +320,13 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 " }}}
 
 " Airline {{{
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+"let g:airline_left_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_left_sep = ''
+"let g:airline_right_sep = ''
 " }}}
 
 " Fugitive {{{
