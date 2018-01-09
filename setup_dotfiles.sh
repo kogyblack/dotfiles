@@ -31,11 +31,6 @@ then
   ln -s $script_dir/tmux/tmux.conf ~/.tmux.conf
 fi
 
-if [[ ! -a ~/.tmux.conf.local ]]
-then
-  ln -s $script_dir/tmux/tmux.conf.local ~/.tmux.conf.local
-fi
-
 echo "Configuring gdb (peda)..."
 
 if [[ ! -a ~/.peda ]]
