@@ -28,6 +28,7 @@ endif
 "          \ https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 "endif
 
+
 call plug#begin()
 
 Plug 'junegunn/vim-plug'
@@ -40,41 +41,45 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'Shougo/vinarise'
+"Plug 'tpope/vim-commentary'
+"Plug 'Shougo/vinarise'
 Plug 'Yggdroot/indentLine' ", {'on': 'IndentLinesEnable'}
 Plug 'bling/vim-airline'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+"Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp', 'h', 'hpp'] }
 "Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+"Plug 'junegunn/fzf.vim'
 
-"Plug 'benekastah/neomake'
+Plug 'benekastah/neomake'
 "Plug 'floobits/floobits-neovim'
 
 " Motion
 Plug 'vim-scripts/lastpos.vim'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'Lokaltog/vim-easymotion'
+"Plug 'Lokaltog/vim-easymotion'
 
 " Language specific
-Plug 'pangloss/vim-javascript'
+"Plug 'pangloss/vim-javascript'
 Plug 'Valloric/python-indent'
 
-Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp'] }
-"Plug 'octol/vim-cpp-enhanced-highlight'
+"Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp'] }
+"Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp'] }
 
 Plug 'plasticboy/vim-markdown'
-Plug 'digitaltoad/vim-jade'
+"Plug 'digitaltoad/vim-jade'
 "Plug 'kchmck/vim-coffee-script'
-Plug 'wavded/vim-stylus'
-Plug 'mattn/emmet-vim' ", { 'on': 'html' }
+"Plug 'wavded/vim-stylus'
+"Plug 'mattn/emmet-vim' ", { 'on': 'html' }
+
+"Plug 'vim-syntastic/syntastic'
+
+Plug 'elzr/vim-json'
 
 
 call plug#end()
@@ -85,7 +90,7 @@ call plug#end()
 
 set encoding=utf-8
 
-syntax enable
+syntax on
 
 set history=500                " Number of things to remember in history.
 set timeoutlen=200              " 
@@ -152,6 +157,7 @@ set cinwords+=for,switch,case
 set t_Co=256
 
 colorscheme kogyblack
+set background=dark
 
 set number
 
@@ -296,6 +302,7 @@ au FileType c let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_c_extra_conf.py'
 
 "let g:neomake_verbose = 0
 "au! BufWritePost * Neomake
+call neomake#configure#automake('w')
 
 " }}}
 
@@ -321,8 +328,8 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 
 " Airline {{{
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+"let g:airline_left_sep = ''
+"let g:airline_right_sep = ''
 "let g:airline_left_sep = ''
 "let g:airline_right_sep = ''
 "let g:airline_left_sep = ''
@@ -368,6 +375,10 @@ let g:user_emmet_leader_key='<c-f>'
 
 " Markdown {{{
 let g:vim_markdown_conceal = 0
+" }}}
+
+" JSON {{{
+let g:vim_json_syntax_conceal = 0
 " }}}
 
 " " }}}
