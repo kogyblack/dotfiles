@@ -2,13 +2,17 @@
 
 echo "~ kogyblack configuration setup ~"
 
-if [[ $UID != 0 ]];
-then
-  echo "Run as root is required:"
-  echo "sudo $0 $*"
-  exit 1
-fi
+# get the dir of the current script
+script_dir="$( cd "$( dirname "$0" )" && pwd )"
 
+#if [[ $UID != 0 ]];
+#then
+#  echo "Run as root is required:"
+#  echo "sudo $0 $*"
+#  exit 1
+#fi
+
+#TODO: Install nerd fonts
 
 # ZSH + Oh My Zsh
 echo -n "Configuring zsh... "
@@ -16,27 +20,25 @@ if command -v zsh >/dev/null 2>&1 ;
 then
   echo "zsh found!"
 else
-  echo "\n"
+  echo ""
 
-  echo -n "Installing zsh... "
-  sudo apt -qq install zsh -y
-  echo "OK!"
+  echo "Installing zsh..."
+  sudo apt install zsh -y
+  echo "Installing zsh... OK!"
 
-  echo -n "Installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-  echo "OK!"
+  echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed 's/env zsh//')"
+  echo "Installing oh-my-zsh... OK!"
 
   echo -n "Copying custom zsh theme... "
-  cp ./zsh/kogyblack.zsh-theme $HOME/.oh-my-zsh/themes/.
+  ln -s $script_dir/zsh/kogyblack.zsh-theme $HOME/.oh-my-zsh/themes/kogyblack.zsh-theme
   echo "OK!"
 
-  echo -n "Applying theme... "
-  sed -i 's/robbyrussell/kogyblack' $HOME/.zshrc
+  echo -n "Copying zshrc... "
+  rm -f $HOME/.zshrc
+  ln -s $script_dir/zsh/zshrc $HOME/.zshrc
   echo "OK!"
 fi
-
-# get the dir of the current script
-script_dir="$( cd "$( dirname "$0" )" && pwd )"
 
 # dircolors (on WSL)
 osrelease="$(cat /proc/sys/kernel/osrelease)"
