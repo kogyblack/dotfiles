@@ -2,7 +2,38 @@
 
 echo "~ kogyblack configuration setup ~"
 
-# TODO: Download zsh + oh-my-zsh and change theme
+if [[ $UID != 0 ]];
+then
+  echo "Run as root is required:"
+  echo "sudo $0 $*"
+  exit 1
+fi
+
+
+# ZSH + Oh My Zsh
+echo -n "Configuring zsh... "
+if command -v zsh >/dev/null 2>&1 ;
+then
+  echo "zsh found!"
+else
+  echo "\n"
+
+  echo -n "Installing zsh... "
+  sudo apt -qq install zsh -y
+  echo "OK!"
+
+  echo -n "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  echo "OK!"
+
+  echo -n "Copying custom zsh theme... "
+  cp ./zsh/kogyblack.zsh-theme $HOME/.oh-my-zsh/themes/.
+  echo "OK!"
+
+  echo -n "Applying theme... "
+  sed -i 's/robbyrussell/kogyblack' $HOME/.zshrc
+  echo "OK!"
+fi
 
 # get the dir of the current script
 script_dir="$( cd "$( dirname "$0" )" && pwd )"
