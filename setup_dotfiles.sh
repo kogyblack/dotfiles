@@ -27,7 +27,7 @@ else
   echo "Installing zsh... OK!"
 
   echo "Installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed 's/env zsh//')"
+  sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | sed 's/env zsh//')"
   echo "Installing oh-my-zsh... OK!"
 
   echo -n "Copying custom zsh theme... "
