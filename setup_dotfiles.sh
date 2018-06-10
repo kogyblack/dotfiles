@@ -5,6 +5,11 @@ echo "~ kogyblack configuration setup ~"
 # get the dir of the current script
 script_dir="$( cd "$( dirname "$0" )" && pwd )"
 
+# OS info
+# WSL: *"Microsoft"*
+# Arch: *"ARCH"*
+os="$(cat /proc/sys/kernel/osrelease)"
+
 #if [[ $UID != 0 ]];
 #then
 #  echo "Run as root is required:"
@@ -23,7 +28,11 @@ else
   echo ""
 
   echo "Installing zsh..."
-  sudo apt install zsh -y
+  if [[ $os == *"ARCH"* ]] ; then
+    yaourt -S zsh
+  else # WSL or Ubuntu
+    sudo apt install zsh -y
+  fi
   echo "Installing zsh... OK!"
 
   echo "Installing oh-my-zsh..."
@@ -41,7 +50,6 @@ else
 fi
 
 # dircolors (on WSL)
-osrelease="$(cat /proc/sys/kernel/osrelease)"
 if [[ $osrelease == *"Microsoft"* && ! -a ~/.dircolors ]]
 then
   echo -n "Configuring dircolors (on WSL)... "

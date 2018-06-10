@@ -6,32 +6,35 @@ if !exists('g:vimrc_initialized')
   let g:rc_dir = strpart($MYVIMRC, 0, strridx($MYVIMRC, (g:is_windows ? '\' : '/'))).'/.vim'
   let $RCDIR = g:rc_dir
   let g:plugins_dir = g:rc_dir.'/plugged'
-  let g:vim_plug_dir = g:plugins_dir.'/vim-plug'
-  let &runtimepath = g:rc_dir.','.g:vim_plug_dir.','.$VIMRUNTIME
+  let g:autoload_dir = g:rc_dir.'/autoload'
+"  let g:vim_plug_dir = g:plugins_dir.'/vim-plug'
+"  let &runtimepath = g:rc_dir.','.g:vim_plug_dir.','.$VIMRUNTIME
+  let &runtimepath = g:rc_dir.','.$VIMRUNTIME
   let g:vimrc_initialized = 1
 endif
 
 " Plugins " {{{
 
 " Install vim-plug if not available {{{
-if !isdirectory(g:vim_plug_dir)
-  call mkdir(g:vim_plug_dir, 'p')
-endif
-if !isdirectory(g:vim_plug_dir.'/autoload')
-  execute '!git clone git://github.com/junegunn/vim-plug '
-        \ shellescape(g:vim_plug_dir.'/autoload', 1)
+if !isdirectory(g:autoload_dir)
+  call mkdir(g:autoload_dir, 'p')
 endif
 
-" Load vim-plug
-"if empty(glob("~/.vim/autoload/plug.vim"))
-"    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"          \ https://raw.github.com/junegunn/vim-plug/master/plug.vim'
-"endif
+" OLD -> was not identified as a plugin (because of extra autoload dir)
+" would be nice if I found a workaround to update vim-plug using itself
+"if !isdirectory(g:vim_plug_dir.'/autoload')
+"  execute '!git clone git://github.com/junegunn/vim-plug '
+"        \ shellescape(g:vim_plug_dir.'/autoload', 1)
+
+if empty(glob(g:autoload_dir."/plug.vim"))
+  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
 
 
-call plug#begin()
+call plug#begin(g:plugins_dir)
 
-Plug 'junegunn/vim-plug'
+"Plug 'junegunn/vim-plug'
 
 " Colorscheme
 Plug 'naumazeredo/vim-kogy-colorscheme'
@@ -66,12 +69,12 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 
 " Language specific
 "Plug 'pangloss/vim-javascript'
-Plug 'Valloric/python-indent'
+Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
 
 "Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp'] }
 "Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp'] }
 
-Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
 "Plug 'digitaltoad/vim-jade'
 "Plug 'kchmck/vim-coffee-script'
 "Plug 'wavded/vim-stylus'
@@ -79,7 +82,8 @@ Plug 'plasticboy/vim-markdown'
 
 "Plug 'vim-syntastic/syntastic'
 
-Plug 'elzr/vim-json'
+Plug 'elzr/vim-json', { 'for': ['json'] }
+Plug 'Glench/Vim-Jinja2-Syntax', { 'for': ['html'] }
 
 
 call plug#end()
@@ -229,7 +233,7 @@ nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>h
 " AutoCommands " {{{
 augroup vimrc_autocmds
   au Filetype markdown setl tw=80 wrap
-  au FileType python setl tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+  au FileType python setl tabstop=4 softtabstop=4 shiftwidth=4 "expandtab
   "au FileType coffee setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType jade setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
   au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
@@ -302,7 +306,8 @@ au FileType c let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_c_extra_conf.py'
 
 "let g:neomake_verbose = 0
 "au! BufWritePost * Neomake
-call neomake#configure#automake('w')
+call neomake#configure#automake('rw')
+let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + ["-d", "missing-docstring,invalid-name", "--ignored-modules", "flask_sqlalchemy", "--ignored-classes", "scoped_session"]
 
 " }}}
 
@@ -310,6 +315,7 @@ call neomake#configure#automake('w')
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 235
 let g:indentLine_char = '│'
+let g:indentLine_setConceal = 0
 
 " }}}
 

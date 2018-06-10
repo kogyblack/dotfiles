@@ -5,8 +5,8 @@ if [[ "$USER" == "root" ]]; then USERCOLOR="red"; else USERCOLOR="yellow"; fi
 
 #PROMPT='%F{green}λ%f %1~/ $(git_prompt_info)%{$reset_color%}→ '
 
-#PROMPT=$LAMBDA' %{$fg_bold[$USERCOLOR]%}%n %{$fg_no_bold[green]%}%1~% $(git_prompt_info) %{$reset_color%}'
-PROMPT=$LAMBDA' %{$fg_no_bold[white]%}%1~% $(git_prompt_info) %{$reset_color%}'
+PROMPT=$LAMBDA'%{$reset_color%}$(show_virtual_env) [%{$fg_bold[$USERCOLOR]%}%n%{$reset_color%}@%m] %{$fg_no_bold[green]%}%3~% $(git_prompt_info) %{$reset_color%}'
+#PROMPT=$LAMBDA' %{$fg_no_bold[white]%}%1~% $(git_prompt_info) %{$reset_color%}'
 
 #RPROMPT='$(get_right_prompt)'
 RPROMPT=''
@@ -15,7 +15,7 @@ RPROMPT=''
 #ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 
 # Format for git_prompt_info()
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[cyan]%} ("
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[cyan]%}  ("
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}%{$fg[cyan]%})%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%}⨯"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
@@ -35,3 +35,9 @@ ZSH_THEME_GIT_PROMPT_AHEAD=" %{$fg_bold[white]%}^"
 # Format for git_prompt_long_sha() and git_prompt_short_sha()
 ZSH_THEME_GIT_PROMPT_SHA_BEFORE=" %{$fg_bold[white]%}[%{$fg_bold[blue]%}"
 ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$fg_bold[white]%}]"
+
+show_virtual_env() {
+  if [ -n "$VIRTUAL_ENV" ]; then
+    echo " ($(basename $VIRTUAL_ENV))"
+  fi
+}
