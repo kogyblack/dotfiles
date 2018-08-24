@@ -9,7 +9,7 @@ if !exists('g:vimrc_initialized')
   let g:autoload_dir = g:rc_dir.'/autoload'
 "  let g:vim_plug_dir = g:plugins_dir.'/vim-plug'
 "  let &runtimepath = g:rc_dir.','.g:vim_plug_dir.','.$VIMRUNTIME
-  let &runtimepath = g:rc_dir.','.$VIMRUNTIME
+  let &runtimepath = g:rc_dir.','.$VIMRUNTIME.',/usr/share/vim/vimfiles'
   let g:vimrc_initialized = 1
 endif
 
@@ -27,12 +27,29 @@ endif
 "        \ shellescape(g:vim_plug_dir.'/autoload', 1)
 
 if empty(glob(g:autoload_dir."/plug.vim"))
-  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+  execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+  " TODO: automatically call PlugInstall (how?)
 endif
 
 
 call plug#begin(g:plugins_dir)
+
+
+
+" TO TEST:
+" Plug 'Shougo/denite.nvim'
+
+" TEST AGAIN: 
+"Plug 'Shougo/vinarise'
+"Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'OmniSharp/omnisharp-vim'
+"Plug 'cyansprite/omnisharp.nvim', { 'do': './install.sh' }
+"Plug 'dimixar/deoplete-omnisharp'
+
+
 
 "Plug 'junegunn/vim-plug'
 
@@ -44,47 +61,48 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-"Plug 'tpope/vim-commentary'
-"Plug 'Shougo/vinarise'
+Plug 'tpope/vim-commentary'
 Plug 'Yggdroot/indentLine' ", {'on': 'IndentLinesEnable'}
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'luochen1990/rainbow'
+Plug 'terryma/vim-multiple-cursors'
 
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp', 'h', 'hpp'] }
-"Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'naumazeredo/vim-unity3d-snippets'
+Plug 'naumazeredo/vim-testlib-snippets'
 
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-"Plug 'junegunn/fzf.vim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --cs-completer' }
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 Plug 'benekastah/neomake'
-"Plug 'floobits/floobits-neovim'
 
 " Motion
 Plug 'vim-scripts/lastpos.vim'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-"Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 
 " Language specific
-"Plug 'pangloss/vim-javascript'
-Plug 'Vimjas/vim-python-pep8-indent', { 'for': ['python'] }
 
-"Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp'] }
-"Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp'] }
+Plug 'sheerun/vim-polyglot'
+
+Plug 'derekwyatt/vim-fswitch', { 'for': ['c', 'cpp'] }
 
 Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
-"Plug 'digitaltoad/vim-jade'
-"Plug 'kchmck/vim-coffee-script'
-"Plug 'wavded/vim-stylus'
 "Plug 'mattn/emmet-vim' ", { 'on': 'html' }
+"Plug 'gregsexton/MatchTag', { 'on': 'html' }
 
-"Plug 'vim-syntastic/syntastic'
-
-Plug 'elzr/vim-json', { 'for': ['json'] }
 Plug 'Glench/Vim-Jinja2-Syntax', { 'for': ['html'] }
 
+Plug 'tikhomirov/vim-glsl'
+Plug 'beyondmarc/hlsl.vim'
+Plug 'vim-scripts/cg.vim'
+Plug 'vim-scripts/ShaderHighLight'
 
 call plug#end()
 
@@ -97,10 +115,10 @@ set encoding=utf-8
 syntax on
 
 set history=500                " Number of things to remember in history.
-set timeoutlen=200              " 
-"set timeoutlen=3000            " 
-set ttimeoutlen=10             " 
-set clipboard+=unnamed         " Yanks go on clipboard instead.
+set timeoutlen=200
+"set timeoutlen=3000
+set ttimeoutlen=10
+set clipboard+=unnamedplus     " Yanks go on clipboard instead.
 
 set autoread
 
@@ -122,6 +140,8 @@ set scrolloff=10
 set mouse=
 
 set modeline
+
+set shortmess+=c
 
 " " }}}
 
@@ -213,11 +233,11 @@ nnoremap <silent> <leader>t "ryy:@r<cr>
 vnoremap <silent> <leader>t "rygy:@r<cr>
 
 " toggle spell on/off
-nnoremap <silent> <leader>s :set spell!<cr>
+"nnoremap <silent> <leader>s :set spell!<cr>
 
 " edit vimrc
-nnoremap <leader>e :e $MYVIMRC<cr>
-nnoremap <leader>r :source $MYVIMRC<cr>
+"nnoremap <leader>e :e $MYVIMRC<cr>
+"nnoremap <leader>r :source $MYVIMRC<cr>
 
 " search/replace the word under the cursor
 nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>hi
@@ -234,12 +254,9 @@ nnoremap <leader>z :let @z = expand("<cword>")<cr>q:i%s/\C\v<<esc>"zpa>//g<esc>h
 augroup vimrc_autocmds
   au Filetype markdown setl tw=80 wrap
   au FileType python setl tabstop=4 softtabstop=4 shiftwidth=4 "expandtab
-  "au FileType coffee setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
-  au FileType jade setl noexpandtab list listchars=tab:\ \ ,trail:·,precedes:<,extends:>
-  au FileType csharp setl tabstop=4 softtabstop=4 shiftwidth=4 cinoptions+=N0
+  au FileType csharp setl tabstop=2 softtabstop=2 shiftwidth=2 cinoptions+=N0
   au FileType c,cpp setl cindent
   au FileType javascript setl tabstop=2 softtabstop=2 shiftwidth=2
-  "au FileType html setl tabstop=4 softtabstop=4 shiftwidth=4 nowrap tw=0
   au FileType html setl tabstop=2 softtabstop=2 shiftwidth=2 nowrap tw=0
 
   " PICO-8
@@ -248,35 +265,30 @@ augroup vimrc_autocmds
   " open help in vertical split
   au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
 
-  " Update Airline
-  "autocmd! BufWritePost .vimrc,_vimrc,vimrc
-  "        \ source $MYVIMRC | AirlineRefresh
-
-  " Highlight lines with more than 80 length
-  "autocmd BufEnter,BufWritePost * highlight OverLength ctermbg=236
-  "autocmd BufEnter,BufWritePost * match OverLength /\%81v./
-
   " Some formats doesn't set fo properly, so we need this autocmd
   autocmd FileType * setlocal formatoptions-=cro
-
-  " Remove trailing whitespaces on specific types
-  "autocmd FileType c,cpp,cs,java,php,python autocmd BufWritePre <buffer> :call StripTrailingWhitespaces()
 augroup END
 
 " " }}}
 
 " Scripts and Plugins Mappings " {{{
 
+" Reloads file if changed outside (since autoread doesn't work)
+autocmd FocusGained * silent! checktime
+
 " Remove trailing mantaining cursor position
-"fun! StripTrailingWhitespaces()
-"  if !&binary && &filetype != 'diff'
-"    normal mz
-"    "normal Hmz
-"    %s/\s\+$//e
-"    "normal 'yz<CR>
-"    normal `z
-"  endif
-"endfunction
+fun! StripTrailingWhitespaces()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    "normal Hmz
+    %s/\s\+$//e
+    "normal 'yz<CR>
+    normal `z
+  endif
+endfunction
+
+nnoremap <silent> <leader>ws :call StripTrailingWhitespaces()<cr>
+
 
 " Fugitive {{{
 nnoremap <leader>gs :Gstatus<cr>
@@ -290,33 +302,28 @@ nnoremap <leader>dg :diffget<cr>:diffupdate<cr>
 vnoremap <leader>dg :diffget<cr>:diffupdate<cr>
 " }}}
 
-" UndoTree {{{
-nnoremap <leader>u :UndotreeToggle<cr>
-" }}}
-
 " YouCompleteMe {{{
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '/usr/share/vim/vimfiles/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
-let g:ycm_autoclose_preview_window_after_completion=1
-au FileType cpp let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_cpp_extra_conf.py'
-au FileType c let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_c_extra_conf.py'
-
+"au FileType cpp let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_cpp_extra_conf.py'
+"au FileType c let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_c_extra_conf.py'
 " }}}
+
 
 " NeoMake {{{
-
 "let g:neomake_verbose = 0
 "au! BufWritePost * Neomake
 call neomake#configure#automake('rw')
 let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + ["-d", "missing-docstring,invalid-name", "--ignored-modules", "flask_sqlalchemy", "--ignored-classes", "scoped_session"]
-
 " }}}
 
 " Indent line {{{
 let g:indentLine_enabled = 1
-let g:indentLine_color_term = 235
+"let g:indentLine_color_term = 235
 let g:indentLine_char = '│'
 let g:indentLine_setConceal = 0
-
 " }}}
 
 " Easy Align {{{
@@ -334,10 +341,7 @@ nmap <LocalLeader>l <Plug>(easymotion-lineforward)
 
 " Airline {{{
 let g:airline_powerline_fonts = 1
-"let g:airline_left_sep = ''
-"let g:airline_right_sep = ''
-"let g:airline_left_sep = ''
-"let g:airline_right_sep = ''
+let g:airline_theme='badcat'
 "let g:airline_left_sep = ''
 "let g:airline_right_sep = ''
 " }}}
@@ -355,15 +359,16 @@ nnoremap <leader>sh :FSSplitLeft<CR>
 
 " NERDTree {{{
 map <localleader>n :NERDTreeToggle<cr><c-w>=
+let NERDTreeIgnore = ['\.meta$']
 " }}}
 
 " Snippets {{{
-"if g:has_python
-  let g:UltiSnipsEditSplit = 'normal'
-  let g:UltiSnipsSnippetsDir = '~/nvim/UltiSnips'
-  "let g:UltiSnipsSnippetsDir = g:rc_dir . '/UltiSnips'
-  let g:UltiSnipsExpandTrigger = "<c-s>"
-"endif
+let g:UltiSnipsEditSplit = 'normal'
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+"let g:UltiSnipsSnippetsDir = g:rc_dir . '/UltiSnips'
+"let g:UltiSnipsExpandTrigger = "<c-s>"
+let g:UltiSnipsExpandTrigger = "<leader>s"
+let g:UltiSnipsJumpForwardTrigger = "<leader>n"
 " }}}
 
 " FZF {{{
@@ -375,10 +380,6 @@ nnoremap <silent> <leader><leader> :Files<cr>
 nnoremap <silent> <leader>b :Buffers<cr>
 " }}}
 
-" Emmet {{{
-let g:user_emmet_leader_key='<c-f>'
-" }}}
-
 " Markdown {{{
 let g:vim_markdown_conceal = 0
 " }}}
@@ -386,5 +387,36 @@ let g:vim_markdown_conceal = 0
 " JSON {{{
 let g:vim_json_syntax_conceal = 0
 " }}}
+
+
+" Deoplete {{{
+"let g:deoplete#enable_at_startup = 1
+"
+"inoremap <silent><expr> <TAB>
+"    \ pumvisible() ? "\<C-n>" :
+"    \ <SID>check_back_space() ? "\<TAB>" :
+"    \ deoplete#mappings#manual_complete()
+"function! s:check_back_space() abort "{{{
+"    let col = col('.') - 1
+"    return !col || getline('.')[col - 1]  =~ '\s'
+"endfunction "}}}
+" }}}
+
+" Emmet {{{
+"let g:user_emmet_leader_key='<c-f>'
+" }}}
+
+" Rainbow {{{
+"let g:rainbow_active = 1
+" }}}
+
+" Omnisharp {{{
+"let g:deoplete_omnisharp_exe_path = '/opt/omnisharp-roslyn/OmniSharp.exe'
+" }}}
+
+" UndoTree {{{
+"nnoremap <leader>u :UndotreeToggle<cr>
+" }}}
+
 
 " " }}}

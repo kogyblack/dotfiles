@@ -34,35 +34,38 @@ HEADER_EXTENSIONS = [
     '.hh'
 ]
 
+
 def IsHeaderFile(filename):
     extension = os.path.splitext(filename)[1]
     return extension in HEADER_EXTENSIONS
 
+
 def GetCompilationInfoForFile(database, filename):
-    logging.info("Getting compilation info for file!");
+    logging.info("Getting compilation info for file!")
     if IsHeaderFile(filename):
         basename = os.path.splitext(filename)[0]
-        logging.info("Basename set!");
+        logging.info("Basename set!")
         for extension in SOURCE_EXTENSIONS:
             replacement_file = basename + extension
-            logging.info("Replacemente file set!");
+            logging.info("Replacemente file set!")
             if os.path.exists(replacement_file):
-                logging.info("Path exists!");
+                logging.info("Path exists!")
                 compilation_info = database.GetCompilationInfoForFile(replacement_file)
-                logging.info("Compilation info gotten!");
+                logging.info("Compilation info gotten!")
                 if compilation_info.compiler_flags_:
-                    logging.info("Returning compilation_info");
+                    logging.info("Returning compilation_info")
                     return compilation_info
         return None
-    logging.info("Returning database.GetCompilationInfoForFile(filename)");
+    logging.info("Returning database.GetCompilationInfoForFile(filename)")
     return database.GetCompilationInfoForFile(filename)
+
 
 def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
     if not working_directory:
         return list(flags)
     new_flags = []
     make_next_absolute = False
-    path_flags = [ '-isystem', '-I', '-iquote', '--sysroot=' ]
+    path_flags = ['-isystem', '-I', '-iquote', '--sysroot=']
     for flag in flags:
         new_flag = flag
 
@@ -77,13 +80,14 @@ def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
                 break
 
             if flag.startswith(path_flag):
-                path = flag[ len(path_flag): ]
+                path = flag[len(path_flag):]
                 new_flag = path_flag + os.path.join(working_directory, path)
                 break
 
         if new_flag:
             new_flags.append(new_flag)
     return new_flags
+
 
 def FindCompilationDatabaseDir():
     try:
@@ -93,11 +97,11 @@ def FindCompilationDatabaseDir():
         for folder in build_folders:
             build_dir = os.path.join(gitroot, folder)
             compilation_db_path = os.path.join(build_dir, 'compile_commands.json')
+
             if os.path.isdir(build_dir):
-                logging.info("Found build directory: " + build_dir);
+                logging.info("Found build directory: %s", build_dir)
                 if os.path.isfile(compilation_db_path):
-                    logging.info("Found compilation database file: " +
-                                 compilation_db_path)
+                    logging.info("Found compilation database file: %s", compilation_db_path)
                     break
                 else:
                     logging.info("Compilation database file not found in build \
@@ -106,12 +110,12 @@ def FindCompilationDatabaseDir():
             logging.info("No compilation database file found!")
             return None
 
-        logging.info("Compilation database dir: " + build_dir);
-        logging.info("Compilation database dirname: " +
-                     os.path.dirname(build_dir));
+        logging.info("Compilation database dir: %s", build_dir)
+        logging.info("Compilation database dirname: %s", os.path.dirname(build_dir))
         return os.path.dirname(build_dir)
     except:
         return None
+
 
 def FlagsForCompilationDatabase(filename):
     try:
@@ -124,21 +128,21 @@ def FlagsForCompilationDatabase(filename):
             return None
         compilation_info = GetCompilationInfoForFile(compilation_db, filename)
         if not compilation_info:
-            logging.info("No compilation info for " + filename + " in \
-                         compilation database")
+            logging.info("No compilation info for %s in compilation database", filename)
             return None
         return MakeRelativePathsInFlagsAbsolute(
             compilation_info.compiler_flags_,
             compilation_info.compiler_working_dir_)
-    except Exception, e:
-        logging.info("Exception raised: " + str(e))
+    except Exception as e:
+        logging.info("Exception raised: %s", str(e))
         return None
+
 
 def FlagsForFile(filename, **kwargs):
     compilation_db_flags = FlagsForCompilationDatabase(filename)
     if compilation_db_flags:
         final_flags = compilation_db_flags
-        if not '-xc++' in final_flags and not '-xc' in final_flags:
+        if '-xc++' not in final_flags and '-xc' not in final_flags:
             final_flags.append('-xc++')
     else:
         final_flags = BASE_FLAGS

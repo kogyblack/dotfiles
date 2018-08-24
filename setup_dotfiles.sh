@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "~ kogyblack configuration setup ~"
 
@@ -17,8 +17,6 @@ os="$(cat /proc/sys/kernel/osrelease)"
 #  exit 1
 #fi
 
-#TODO: Install nerd fonts
-
 # ZSH + Oh My Zsh
 echo -n "Configuring zsh... "
 if command -v zsh >/dev/null 2>&1 ;
@@ -30,6 +28,7 @@ else
   echo "Installing zsh..."
   if [[ $os == *"ARCH"* ]] ; then
     yaourt -S zsh
+    yaourt -S wget curl
   else # WSL or Ubuntu
     sudo apt install zsh -y
   fi
@@ -49,6 +48,22 @@ else
   echo "OK!"
 fi
 
+# xclip
+echo -n "Configuring xclip..."
+if command -v xclip >/dev/null 2>&1 ;
+then
+  echo "xclip found!"
+else
+  echo ""
+  echo "Installing xclip..."
+  if [[ $os == *"ARCH"* ]]; then
+    yaourt -S xclip
+  else # WSL or Ubuntu
+    sudo apt install xclip -y
+  fi
+  echo "Installing xclip... OK!"
+fi
+
 # dircolors (on WSL)
 if [[ $osrelease == *"Microsoft"* && ! -a ~/.dircolors ]]
 then
@@ -62,7 +77,7 @@ then
   echo "OK! (must restart terminal)"
 fi
 
-# vim
+# neovim
 echo -n "Configuring vim... "
 
 if [[ -a ~/.vimrc ]]
