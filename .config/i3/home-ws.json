@@ -1,0 +1,109 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1020,
+       "width": 1880,
+       "x": 0,
+       "y": 0
+    },
+    "name": "naum : zsh — Konsole",
+    "percent": 0.4,
+    "swallows": [
+       {
+          "class": "^konsole$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1020,
+       "width": 1880,
+       "x": 0,
+       "y": 0
+    },
+    "name": "naum : zsh — Konsole",
+    "percent": 0.4,
+    "swallows": [
+       {
+          "class": "^konsole$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    // splitv split container with 3 children
+    "border": "none",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.2,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1020,
+               "width": 1880,
+               "x": 0,
+               "y": 0
+            },
+            "name": "naum : tty-clock — Konsole",
+            "percent": 0.3,
+            "swallows": [
+               {
+                  "window_role": "^clock$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1020,
+               "width": 1880,
+               "x": 0,
+               "y": 0
+            },
+            "name": "naum : htop — Konsole",
+            "percent": 0.3,
+            "swallows": [
+               {
+                  "window_role": "^htop$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+                "height": 1020,
+                "width": 1880,
+                "x": 0,
+                "y": 0
+            },
+            "name": "naum : cava — Konsole",
+            "percent": 1,
+            "swallows": [
+                {
+                    "window_role": "^eq$"
+                }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
