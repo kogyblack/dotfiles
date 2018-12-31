@@ -1,0 +1,295 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+; ARGB colors!
+
+[bar/top]
+width = 100%
+height = 20
+
+;border-top-size = 5
+;border-top-color = ${env:bg}
+
+background = ${env:bg}
+foreground = ${env:fg}
+
+line-size = 0
+
+#border-size = 4
+#border-color = ${colors.background}
+
+;module-margin-left = 1
+;module-margin-right = 2
+
+;font-0 = fixed:pixelsize=9;antialias=false;1
+;font-0 = "FuraCode Nerd Font Mono:pixelsize=9;1"
+font-0 = "Hack Nerd Font Mono:style=Regular:pixelsize=9;"
+font-1 = "Hack Nerd Font Mono:style=Regular:pixelsize=12;"
+
+;modules-left = pointright i3 separator wlan separator eth separator xwindow separator
+;modules-center = xwindow separator music
+;modules-right = backlight-acpi pulseaudio memory cpu wlan eth battery xkeyboard date powermenu
+
+modules-left = pointright i3 separator wlan separator eth separator
+modules-center = xwindow
+modules-right = separator kb separator backlight separator vol separator cpu separator memory separator battery separator date separator powermenu pointleft
+
+;tray-position = left
+tray-position = none
+tray-padding = 4
+tray-background = ${env:bg}
+
+;wm-restack = i3
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+;cursor-scroll = ns-resize
+
+[module/separator]
+type = custom/text
+content-foreground = ${env:sep}
+content = "  "
+
+[module/pointleft]
+content-foreground = ${env:sep}
+type = custom/text
+content = " "
+
+[module/pointright]
+content-foreground = ${env:sep}
+type = custom/text
+content = " "
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/kb]
+type = internal/xkeyboard
+blacklist-0 = num lock
+blacklist-1 = caps lock
+blacklist-2 = scroll lock
+
+label-layout = %layout%
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${env:fg_prefix}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+;index-sort = true
+;wrapping-scroll = false
+strip-wsnumbers = true
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+; focused = Active workspace on focused monitor
+label-focused = %name%
+label-focused-background = ${env:fg_prefix}
+label-focused-underline= ${env:sep}
+label-focused-padding = 1
+label-focused-font = 2
+
+; unfocused = Inactive workspace on any monitor
+;label-unfocused = %index%: %name%
+label-unfocused-font = 2
+label-unfocused = %name%
+label-unfocused-padding = 1
+
+; visible = Active workspace on unfocused monitor
+;label-visible = %name%
+;label-visible-background = ${self.label-focused-background}
+;label-visible-underline = ${self.label-focused-underline}
+;label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+;label-urgent = %index%: %name%
+label-urgent = %name%
+label-urgent-background = ${env:bg_alert}
+label-urgent-padding = 1
+
+; Separator in between workspaces
+; label-separator = |
+
+
+[module/music]
+type = internal/mpd
+host = 127.0.0.1
+format-online = <label-song> @ <label-time> <bar-progress>
+format-offline = offline
+
+format-online-prefix = "MPD "
+format-online-prefix-foreground = ${env:fg_prefix}
+format-offline-prefix = "MPD "
+format-offline-prefix-foreground = ${env:fg_prefix}
+
+label-song = %artist% - %title%
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+bar-progress-width = 15
+bar-progress-fill = =
+bar-progress-fill-foreground = ${env:bar_primary}
+bar-progress-empty = -
+bar-progress-empty-foreground = ${env:bar_secondary}
+bar-progress-indicator = >
+bar-progress-indicator-foreground = ${env:bar_sep}
+
+[module/backlight]
+type = internal/backlight
+interval = 0.1
+card = intel_backlight
+format-prefix = "LGT "
+format-prefix-foreground = ${env:fg_prefix}
+format = <label>
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+
+format-prefix = "CPU "
+format-prefix-foreground = ${env:fg_prefix}
+;format = <label> <ramp-coreload>
+format = <label>
+;label = %percentage:2%%
+label = %percentage%%
+
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+[module/memory]
+type = internal/memory
+interval = 20
+format-prefix = "MEM "
+;format-prefix = " "
+format-prefix-foreground = ${env:fg_prefix}
+;label = %percentage_used%%
+label = %gb_used%
+
+[module/wlan]
+;[ %downspeed:3% /  %upspeed:3%]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+
+format-connected-prefix = "WLN "
+format-connected-prefix-foreground = ${env:fg_prefix}
+;label-connected = %local_ip% @ %essid% [ %downspeed%  %upspeed%]
+label-connected = %essid% [ %downspeed%  %upspeed%]
+format-disconnected-prefix = "WLN "
+format-disconnected-prefix-foreground = ${env:fg_prefix}
+label-disconnected = "down"
+
+[module/eth]
+type = internal/network
+interface = enp2s0
+interval = 3.0
+
+format-connected-prefix = "ETH "
+format-connected-prefix-foreground = ${env:fg_prefix}
+label-connected = %local_ip% [ %downspeed%  %upspeed%]
+label-disconnected = "down"
+format-disconnected-prefix = "ETH "
+format-disconnected-prefix-foreground = ${env:fg_prefix}
+
+[module/date]
+type = internal/date
+interval = 1
+date = "%Y.%m.%d %a"
+time = "%H:%M:%S"
+format-prefix-foreground = ${env:fg_prefix}
+label = %date% %time%
+
+[module/vol]
+type = internal/pulseaudio
+interval = 1
+format-volume-prefix = "VOL "
+format-volume-prefix-foreground = ${env:fg_prefix}
+format-volume = <label-volume>
+
+label-muted = muted
+label-muted-foreground = #888
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 99
+
+format-full-prefix-foreground = ${env:fg_prefix}
+format-full-prefix = "BAT "
+
+format-charging-prefix = "CRG "
+format-charging-prefix-foreground = ${env:fg_prefix}
+format-charging = <label-charging>
+label-charging = %percentage%%
+
+format-discharging-prefix = "DIS "
+format-discharging-prefix-foreground = ${env:fg_prefix}
+format-discharging = <label-discharging>
+label-discharging = %percentage%%
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${env:fg_alert}
+label-close = 
+label-close-foreground = ${env:fg_alert}
+label-separator = |
+label-separator-foreground = ${env:fg_prefix}
+
+menu-0-0 = logout
+menu-0-0-exec = i3-nagbar -t warning -m 'Logout ?' -b 'Sure' 'i3-msg exit'
+menu-0-1 = reboot
+menu-0-1-exec = i3-nagbar -t warning -m 'Reboot ?' -b 'Sure' 'reboot'
+menu-0-2 = power off
+menu-0-2-exec = i3-nagbar -t warning -m 'Poweroff ?' -b 'Sure' 'sudo poweroff'
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
