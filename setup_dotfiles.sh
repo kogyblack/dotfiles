@@ -65,7 +65,7 @@ else
 fi
 
 # dircolors (on WSL)
-if [[ $osrelease == *"Microsoft"* && ! -a ~/.dircolors ]]
+if [[ $os == *"Microsoft"* && ! -a ~/.dircolors ]]
 then
   echo -n "Configuring dircolors (on WSL)... "
   ln -s $script_dir/dircolors ~/.dircolors
