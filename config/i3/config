@@ -134,6 +134,7 @@ bindsym $mod+r mode "resize"
 
 #for_window [class="^.*"] border pixel 2
 for_window [class="^.*"] border pixel 0
+for_window [class="konsole"] border pixel 1
 
 gaps inner 20
 gaps outer 0
@@ -177,7 +178,8 @@ bindsym $mod+Shift+s exec --no-startup-id gnome-screenshot -a -c
 
 # Wallpaper
 #exec_always --no-startup-id feh --bg-scale ~/.wallpaper/*
-exec_always --no-startup-id feh --bg-scale ~/.wallpaper/arch.jpg
+#exec_always --no-startup-id feh --bg-scale ~/.wallpaper/arch.jpg
+exec_always --no-startup-id feh --bg-scale ~/.wallpaper/arch-dark.jpg
 
 # Polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -185,10 +187,13 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Program launcher
 #bindsym $mod+d exec --no-startup-id dmenu_run
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec --no-startup-id rofi -show drun
+
+#bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id ". $USERSCRIPT/rofi-widgets/wrapper/rofi.sh && rofi_drun"
 
 # Compton
-exec_always --no-startup-id compton
+#exec_always --no-startup-id compton
+exec_always --no-startup-id $USERCONFIG/compton/compton.sh
 
 # Keyboard layout
 exec_always --no-startup-id setxkbmap -model pc104 -layout us,br -variant ,abnt2 -option grp:alt_shift_toggle

@@ -34,24 +34,41 @@ pacman -S git
 # makepkg etc
 pacman -S make fakeroot patch
 
+# base devel
+pacman -S base-devel
+
+### TODO: use something better than yaourt!!!
 # yaourt
-git clone https://aur.archlinux.org/package-query.git /tmp
-pushd /tmp/package-query
+#git clone https://aur.archlinux.org/package-query.git /tmp
+#pushd /tmp/package-query
+#makepkg -si
+#popd
+#
+#git clone https://aur.archlinux.org/yaourt.git /tmp
+#pushd /tmp/yaourt
+#makepkg -si
+#popd
+#
+#yaourt -Syu --aur
+
+# yay
+git clone https://aur.archlinux.org/yay.git
+pushd yay
 makepkg -si
 popd
-
-git clone https://aur.archlinux.org/yaourt.git /tmp
-pushd /tmp/yaourt
-makepkg -si
-popd
-
-yaourt -Syu --aur
 
 # ttf-fira-code
-yaourt -S ttf-fira-code
+#yaourt -S ttf-fira-code
+yay -S ttf-fira-code
 
+# TODO: test suckless terminal? mlterm?
 # konsole
-yaourt -S konsole
+#yaourt -S konsole
+yay -S konsole
 
 # neovim
-yaourt -S neovim neovim-symlinks
+#yaourt -S neovim neovim-symlinks
+yay -S neovim neovim-symlinks
+
+# fonts: (AUR) powerline-fonts-git
+yay -S powerline-fonts-git
